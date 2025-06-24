@@ -1,3 +1,5 @@
+package src;
+
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -5,7 +7,7 @@ import java.util.Scanner;
 public class Tabuleiro{
     private ArrayList<Jogador> jogadores;
     private int numJogadores;
-    private Scanner T = Entrada.getScanner();
+    private Scanner Teclado = Entrada.getScanner();
 
     public Tabuleiro(int numJogadores){
         this.jogadores = new ArrayList<>();
@@ -137,12 +139,12 @@ public class Tabuleiro{
         }
 
         
-        int esc = T.nextInt();
+        int esc = Teclado.nextInt();
         esc--;
 
         while(esc < 0 || esc > numJogadores || esc == i){
             System.out.print("Escolha uma cor válida: ");
-            esc = T.nextInt();
+            esc = Teclado.nextInt();
             esc--;
         }
 

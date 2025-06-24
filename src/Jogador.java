@@ -1,3 +1,5 @@
+package src;
+
 public abstract class Jogador{
     protected int casaAtual;
     protected String cor;
