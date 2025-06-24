@@ -1,26 +1,26 @@
 package src;
 
 public abstract class Jogador{
+    private Cor cor;
     protected int casaAtual;
-    protected String cor;
     protected int dado1, dado2;
     protected boolean podeJogar;
     protected int numJogadas;
     
-    public Jogador(String cor){
-        this.cor = cor;
+    public Jogador(int num_cor){
+        this.cor = CorFactory.instanciarCor(num_cor);
         this.casaAtual = 0;
         this.podeJogar = true;
     }
-    public Jogador(String cor, int casa){
-        this.cor = cor;
+    public Jogador(int num_cor, int casa){
+        this.cor = CorFactory.instanciarCor(num_cor);
         this.casaAtual = casa;
         this.podeJogar = true;
     }
     public abstract int rolarDados();
 
     public String getCor(){
-        return cor;
+        return cor.getNome();
     }
     public int getCasaAtual(){
         return casaAtual;
