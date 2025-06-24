@@ -6,9 +6,10 @@ import java.util.Set;
 
 public class Main {
     //private static Jogador jogador;
-    private static Tabuleiro tabuleiro; 
-    private static Scanner T = Entrada.getScanner();
+    
     public static void main(String[] args){
+        JogoFacade jogo = new JogoFacade();
+        jogo.GetNumCasa();
         int numJogadores = 0;
         Set<Integer> tipos  = new HashSet<>();
 
