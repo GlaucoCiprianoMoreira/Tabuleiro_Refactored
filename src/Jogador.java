@@ -1,20 +1,20 @@
 package src;
 
 public abstract class Jogador{
-    protected int casaAtual;
+    protected int indice;
     protected String cor;
     protected int dado1, dado2;
     protected boolean podeJogar;
     protected int numJogadas;
     
-    public Jogador(String cor){
+    public Jogador(String cor, int indice){
         this.cor = cor;
-        this.casaAtual = 0;
+        this.indice = indice;
         this.podeJogar = true;
     }
-    public Jogador(String cor, int casa){
+    public Jogador(String cor, int indice){
         this.cor = cor;
-        this.casaAtual = casa;
+        this.indice = indice;
         this.podeJogar = true;
     }
     public abstract int rolarDados();
@@ -22,14 +22,8 @@ public abstract class Jogador{
     public String getCor(){
         return cor;
     }
-    public int getCasaAtual(){
-        return casaAtual;
-    }
-    public void setCasaAtual(int novaCasa){
-        this.casaAtual = novaCasa;
-    }
-    public void somaCasaAtual(int novaCasa){
-        this.casaAtual += novaCasa;
+    public int getIndice(){
+        return indice;
     }
     public int getDado1(){
         return dado1;
