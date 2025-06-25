@@ -122,7 +122,9 @@ public class JogoFacade {
     }
 
     public static int escolherJogador(String cor){
-        boolean flag = true;            
+        boolean flag = true;
+        int indice = 0;
+        Tabuleiro tabuleiro = Tabuleiro.getInstancia();
         int tipo = 0;
         while(flag == true){ // TEM QUE TER PELO MENOS DOIS TIPOS DIFERENTES = TODOS NÃO PODEM SER IGUAIS
             System.out.println("Escolha o tipo do jogador:");
@@ -133,23 +135,24 @@ public class JogoFacade {
             tipo = Teclado.nextInt();
             switch(tipo){
                 case 1:
-                    tabuleiro.adicionarJogadores(new Normal(cor));
+                    tabuleiro.adicionarJogadores(new Normal(cor, indice));
                     flag = false;
                     tipo = 1;
                     break;
                 case 2:
-                    tabuleiro.adicionarJogadores(new Azarado(cor));
+                    tabuleiro.adicionarJogadores(new Azarado(cor, indice));
                     flag = false;
                     tipo = 2;
                     break;
                 case 3:
-                    tabuleiro.adicionarJogadores(new Sortudo(cor));
+                    tabuleiro.adicionarJogadores(new Sortudo(cor, indice));
                     flag = false;
                     tipo = 3;
                     break;
                 default:
                     System.out.println("Tipo inválido, tente novamente");
-            }   
+            }
+            indice++; 
         }
         return tipo;
     }
@@ -166,7 +169,7 @@ public class JogoFacade {
         Modo modoJogo = new Modo();
         int modo = modoJogo.getModo();
         int numJogadores = getNumJogadores();
-        tabuleiro = new Tabuleiro(numJogadores);
+        Tabuleiro tabuleiro = Tabuleiro.getInstancia();
         int rodada = 0;
         int jogadorVitorioso = -1;
         while(jogadorVitorioso == -1){
