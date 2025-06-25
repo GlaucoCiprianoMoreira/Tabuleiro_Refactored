@@ -1,32 +1,49 @@
 package src;
 
 import java.util.ArrayList;
-import java.util.Random;
 
-public class Tabuleiro{
-    public static Tabuleiro tabuleiro;
+public class Tabuleiro {
+    private static Tabuleiro instancia; // instância única (singleton)
+
     private ArrayList<Jogador> jogadores;
-    private ArrayList<Integer> casas_jogadores;
+    private ArrayList<Casa> casas;
+    private int[] casaJogador;
 
-    private Tabuleiro(){
+    // Construtor privado
+    private Tabuleiro() {
         this.jogadores = new ArrayList<>();
-        this.casas_jogadores = new ArrayList<>();
-    }
-    public static Tabuleiro getInstancia(){
-        if(tabuleiro == null)
-            tabuleiro = new Tabuleiro();
-        return tabuleiro;
+        this.casas = new ArrayList<>();
     }
 
-    public ArrayList<Jogador> getJogadores(){
+    // Método de acesso público
+    public static Tabuleiro getInstancia() {
+        if (instancia == null) {
+            instancia = new Tabuleiro();
+        }
+        return instancia;
+    }
+
+    public ArrayList<Jogador> getJogadores() {
         return jogadores;
     }
 
-    public void setCasaJogador(int player, int novaCasa){
-        casas_jogadores.set(player, novaCasa);
+    public void adicionarJogadores(Jogador j) {
+        jogadores.add(j);
     }
 
-    public Integer getCasaJogador(int player){
-        return casas_jogadores.get(player);
+    public ArrayList<Casa> getCasas() {
+        return casas;
+    }
+    public void criarCasaJogador(){
+        casaJogador = new int[jogadores.size()];
+    }
+    public void setCasaJogador(int indice, int casa){
+        casaJogador[indice] = casa;
+    }
+    public int getCasaJogador(int indice){
+        return casaJogador[indice];
+    }
+    public void adicionarCasa(Casa casa) {
+        casas.add(casa);
     }
 }
