@@ -52,36 +52,38 @@ public class Modo {
     }
 
     public int Normal(int rodada, Tabuleiro tabuleiro) {
-        for (int i=0; i<tabuleiro.getJogadores().size(); i++) {
-            
-            if (tabuleiro.getJogadores().get(i).getPodeJogar()) {
-                System.out.println("\n\nRodada " + rodada);
-                System.out.println("- - - VEZ DO JOGADOR " + tabuleiro.getJogadores().get(i).getCor().toUpperCase() + " - - -");
-
+        int resultado = 0;
+        tabuleiro = Tabuleiro.getInstancia();
+        System.out.println("Você escolheu o modo normal.");
+        for (int i=0; i<tabuleiro.getJogadores().size(); i++) {  
+            System.out.println("\n\nRodada " + rodada);
+            System.out.println("- - - VEZ DO JOGADOR " + tabuleiro.getJogadores().get(i).getCor().toUpperCase() + " - - -");
+            if(tabuleiro.getJogadores().get(i).getPodeJogar() == true){
                 System.out.println("Vez do jogador "+ tabuleiro.getJogadores().get(i).getCor());
-                System.out.println("Role os dados!");
 
-                System.out.println("Pressione 1 - para rolar os dados 2 - Passar Rodada.");
-                int esc = Teclado.nextInt();
-                if (esc == 2) {
-                    System.out.println("Rodada passada.");
-                    continue;
-                }else if(esc == 1){
-                    System.out.println("Rolando os dados...");
-
-                }
-                int resultado = tabuleiro.getJogadores().get(i).rolarDados();
-                int flagTabuleiro = tabuleiro.fazerRodada(resultado, i);    		
-                if (flagTabuleiro != -1) {
-                    return flagTabuleiro;
-                }
-            } else {
-                tabuleiro.getJogadores().get(i).setPodeJogar(true);
+            System.out.println("Pressione 1 - para rolar os dados 2 - Passar Rodada.");
+            int esc = Teclado.nextInt();
+            if (esc == 2) {
+                System.out.println("Rodada passada.");
+                continue;
+            }else if(esc == 1){
+                System.out.println("Rolando os dados...");
+                tabuleiro.getJogadores().get(i).getDado1().rolar();
+                tabuleiro.getJogadores().get(i).getDado2().rolar();
+                resultado = tabuleiro.getJogadores().get(i).getDado1().getValor() + tabuleiro.getJogadores().get(i).getDado2().getValor();
+                System.out.println("Resultado dos dados: " + resultado);
+            }
+            tabuleiro.setCasaJogador(i, tabuleiro.getCasaJogador(i) + resultado);
+            String mensagem =tabuleiro.getCasas().get(tabuleiro.getCasaJogador(i)).aplicarEfeito(tabuleiro.getJogadores().get(i));   
+            System.out.println(mensagem);             
+    	    }else{
+                String mensagem = tabuleiro.getCasas().get(tabuleiro.getCasaJogador(i)).aplicarEfeito(tabuleiro.getJogadores().get(i));
                 System.out.println("\n\nRodada " + rodada);
-                System.out.println("\nJogador " + tabuleiro.getJogadores().get(i).getCor() + " não pode jogar nesta rodada.");
-            } 
-    	}
+                System.out.println(mensagem);
+            }
+        }
     	return -1;
     }
+
 
 }

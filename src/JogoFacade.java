@@ -128,24 +128,24 @@ public class JogoFacade {
         int tipo = 0;
         while(flag == true){ // TEM QUE TER PELO MENOS DOIS TIPOS DIFERENTES = TODOS NÃO PODEM SER IGUAIS
             System.out.println("Escolha o tipo do jogador:");
-            System.out.println("1 - Normal:");
-            System.out.println("2 - Azarado:");
-            System.out.println("3 - Sortudo:");
+            System.out.println("1 - Sortudo:");
+            System.out.println("2 - Normal:");
+            System.out.println("3 - Azarado:");
             System.out.print("-> ");
             tipo = Teclado.nextInt();
             switch(tipo){
                 case 1:
-                    tabuleiro.adicionarJogadores(new Normal(cor, indice));
+                    tabuleiro.adicionarJogadores(new Sortudo(cor, indice));
                     flag = false;
                     tipo = 1;
                     break;
                 case 2:
-                    tabuleiro.adicionarJogadores(new Azarado(cor, indice));
+                    tabuleiro.adicionarJogadores(new Normal(cor, indice));
                     flag = false;
                     tipo = 2;
                     break;
                 case 3:
-                    tabuleiro.adicionarJogadores(new Sortudo(cor, indice));
+                    tabuleiro.adicionarJogadores(new Azarado(cor, indice));
                     flag = false;
                     tipo = 3;
                     break;
@@ -158,7 +158,21 @@ public class JogoFacade {
     }
 
     public void configTabuleiro(int numCasas) {
-        
+        FactoryCasa factoryCasa = new FactoryCasa();
+        tabuleiro = Tabuleiro.getInstancia();
+        for(int i =0; i < numCasas; i++){
+            System.out.println("Escolha o tipo da casa " + (i + 1) + ":");
+            System.out.println("1 - Casa Surpresa");
+            System.out.println("2 - Casa Normal");
+            System.out.println("3 - Casa Azar");
+            System.out.println("4 - Casa Sorte");
+            System.out.println("5 - Casa Reversa");
+            System.out.println("6 - Casa Prisão");
+            System.out.println("7 - Casa Jogar de Novo");
+            System.out.print("-> ");
+            int escolha = Teclado.nextInt();
+            tabuleiro.adicionarCasa(factoryCasa.fazerCasa(escolha));
+        }
     }
 
     public void printTabuleiro(){
