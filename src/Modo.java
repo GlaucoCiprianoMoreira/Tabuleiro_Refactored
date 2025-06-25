@@ -26,26 +26,24 @@ public class Modo {
         return modo;
     }
 
-    public int Debug(int rodada, Tabuleiro tabuleiro) {
-        Scanner T = Entrada.getScanner();
-        
+    public int Debug(int rodada, Tabuleiro tabuleiro) {        
         System.out.println("Você escolheu o modo debug.");
         System.out.println("No modo debug, você pode escolher a casa que o jogador irá andar.");
-        System.out.println("Digite o número da casa (0-39) ou -1 para sair do modo debug.");
+        System.out.println("Digite o número da casa ou -1 para sair do modo debug.");
     	for (int i=0; i<tabuleiro.getJogadores().size(); i++) {
             if(tabuleiro.getJogadores().get(i).getPodeJogar()){
                 System.out.println("\n\nRodada " + rodada);
                 System.out.println("- - - VEZ DO JOGADOR " + tabuleiro.getJogadores().get(i).getCor().toUpperCase() + " - - -");
                 System.out.println("Você deseja que o Jogador " + tabuleiro.getJogadores().get(i).getCor() + " ande até que casa? ");
-                int casa = T.nextInt();
-                int flagTabuleiro = tabuleiro.modoDebug(rodada, casa, i);
-                if (flagTabuleiro != -1) {
-                    return flagTabuleiro;
-                }
+                int casa = Teclado.nextInt();
+                String mensagem = tabuleiro.getCasas().get(casa).aplicarEfeito(tabuleiro.getJogadores().get(i));
+                tabuleiro.setCasaJogador(i, casa);
+                System.out.println(mensagem);
             }else{
-                tabuleiro.getJogadores().get(i).setPodeJogar(true);
+                String mensagem = tabuleiro.getCasas().get(tabuleiro.getCasaJogador(i)).aplicarEfeito(tabuleiro.getJogadores().get(i));
                 System.out.println("\n\nRodada " + rodada);
-                System.out.println("\nJogador " + tabuleiro.getJogadores().get(i).getCor() + " não pode jogar nesta rodada.");   
+                System.out.println(mensagem);
+                  
             } 
     	}
     	return -1;
