@@ -181,9 +181,20 @@ public class JogoFacade {
         }
     }
 
-    public void printTabuleiro(){
-        
+    public void printTabuleiro() {
+        Tabuleiro tabuleiro = Tabuleiro.getInstancia();
+        System.out.println("\n📍 Estado atual do tabuleiro:");
+        for (int i = 0; i < tabuleiro.getCasas().size(); i++) {
+            String jogadoresNaCasa = "";
+            for (int j = 0; j < tabuleiro.getJogadores().size(); j++) {
+                if (tabuleiro.getCasaJogador(j) == i) {
+                    jogadoresNaCasa += "[" + tabuleiro.getJogadores().get(j).getCor().charAt(0) + "]";
+                }
+            }
+            System.out.println("Casa " + i + ": " + jogadoresNaCasa);
+        }
     }
+
 
     public void startJogo(){
         Tabuleiro tabuleiro = Tabuleiro.getInstancia();
