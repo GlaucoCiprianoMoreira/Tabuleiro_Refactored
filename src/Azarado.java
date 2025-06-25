@@ -1,22 +1,18 @@
 package src;
 
-import java.util.Random;
-
 public class Azarado extends Jogador {
 
-    public Azarado(String cor){
-        super(cor);
+    public Azarado(String cor, int indice){
+        super(cor, indice);
     }
-    public Azarado(String cor, int casa){
-        super(cor, casa);
-    }
+    @Override
     public int rolarDados(){
         while(true){
-            Random random = new Random();
-            dado1 = random.nextInt(6) + 1;
-            dado2 = random.nextInt(6) + 1;
-            if(dado1 + dado2 <= 6)
-                return dado1 + dado2;
+            dado1.rolar();
+            dado2.rolar();
+            if(dado1.getValor() + dado2.getValor() <= 6) {
+                return dado1.getValor() + dado2.getValor();
+            }
         }
     }
 }

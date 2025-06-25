@@ -4,7 +4,6 @@ public class FactoryCasa {
         switch (escolha) {
             case 1:
                 return new CasaSurpresa();
-                break;
             case 2:
                 return new CasaNormal();
             case 3:
@@ -15,6 +14,8 @@ public class FactoryCasa {
                 return new CasaReversa();
             case 6:
                 return new CasaPrisao();
+            case 7:
+                return new CasaJogarDeNovo();
             default:
                 throw new IllegalArgumentException("Escolha inválida: " + escolha);
         }

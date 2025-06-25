@@ -1,0 +1,16 @@
+package src;
+
+public class JogadorFactory {
+    public Jogador criarJogador(String cor, int indice, int escolha) {
+        switch (escolha) {
+            case 1:
+                return new Sortudo(cor, indice);
+            case 2:
+                return new Normal(cor, indice);
+            case 3:
+                return new Azarado(cor, indice);
+        }
+        return null;
+    }
+            
+}

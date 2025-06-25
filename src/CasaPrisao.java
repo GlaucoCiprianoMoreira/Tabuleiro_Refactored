@@ -1,11 +1,15 @@
 package src;
 public class CasaPrisao extends Casa{
-    public void aplicarEfeito(Jogador jogador){
+    @Override
+    public String aplicarEfeito(Jogador jogador){
         if (jogador.getPodeJogar() == false){ 
             jogador.setPodeJogar(true);
+            return "Agora você pode jogar";
         }else{
             jogador.setPodeJogar(false);
+
         }
-        return null;
+        return "Você foi preso! Não pode jogar na próxima rodada.";
+        
     }
 }

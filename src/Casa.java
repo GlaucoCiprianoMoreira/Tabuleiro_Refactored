@@ -2,5 +2,5 @@ package src;
 
 public abstract class Casa{
 
-    public abstract void aplicarEfeito(Jogador jogador);
+    public abstract String aplicarEfeito(Jogador jogador);
 }

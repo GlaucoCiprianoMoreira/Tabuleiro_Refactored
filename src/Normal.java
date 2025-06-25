@@ -1,21 +1,15 @@
 package src;
 
-import java.util.Random;
-
 public class Normal extends Jogador {
-    
-    public Normal(String cor){
-        super(cor);
-    }
-    public Normal(String cor, int casa){
-        super(cor, casa);
+
+    public Normal(String cor, int indice){
+        super(cor, indice);
     }
 
     public int rolarDados(){
-        Random random = new Random();
-        dado1 = random.nextInt(6) + 1;
-        dado2 = random.nextInt(6) + 1;
-        return dado1 + dado2;
+        dado1.rolar();
+        dado2.rolar();
+        return dado1.getValor() + dado2.getValor();
     }
 
 }
