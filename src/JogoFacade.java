@@ -194,11 +194,6 @@ public class JogoFacade {
             	System.out.println("Escolha inválida!");
             }    
         }
-        System.out.println("\nRodada " + rodada + " - Fim de jogo!");
-        System.out.println("Jogador " + tabuleiro.getJogadores().get(jogadorVitorioso).getCor() + " vitorioso.");
-        System.out.println("Número de jogadas dos jogadores:");
-        for (int j=0; j<tabuleiro.getJogadores().size(); j++) {
-        	System.out.println("Número de jogadas do jogador " + tabuleiro.getJogadores().get(j).getCor() + " é " + tabuleiro.getJogadores().get(j).getNumJogadas());
-        }
+        tela.finalJogo(jogadorVitorioso, rodada, tabuleiro);
     }
 }
