@@ -43,8 +43,8 @@ public class Tela {
         System.out.print(mensagem + " ");
     }
 
-    public void saidaVariavel(String variavel){
-        System.out.print(variavel + " ");
+    public void saidaVariavel(int variavel){
+        System.out.print(String.valueOf(variavel) + " ");
     }
 
     public void pedirNumJogadores(){

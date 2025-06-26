@@ -11,6 +11,7 @@ public class JogoFacade {
     public JogoFacade(){
 
     }
+
     public int getNumJogadores() {
         tela.pedirNumJogadores();
         int numJogadores = Teclado.nextInt();
@@ -135,6 +136,11 @@ public class JogoFacade {
         for(int i =0; i < numCasas; i++){
             tela.pedirTipoCasa(i+1);
             int escolha = Teclado.nextInt();
+            if(escolha < 1 || escolha > 7) {
+                tela.mostrarErro("Tipo de casa inválido! Tente novamente.");
+                i--;
+                continue; // Pula para a próxima iteração do loop
+            }
             tabuleiro.adicionarCasa(factoryCasa.fazerCasa(escolha));
         }
     }
