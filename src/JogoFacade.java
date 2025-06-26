@@ -39,22 +39,13 @@ public class JogoFacade {
         Set<Integer> tipos  = new HashSet<>();
         int certo = -1;
         while (certo == -1){
-            /*while(numJogadores < 2 || numJogadores > 6){
-                System.out.print("Digite o número de jogadores: ");
-                numJogadores = Teclado.nextInt();
-                if(numJogadores < 2){
-                    System.out.println("Número mínimo de jogadores é 2.");
-                }else if(numJogadores > 6){
-                    System.out.println("Número máximo de jogadores é 6.");
-                }
-            }*/
             int[] cor = new int[numJogadores];
             int esc = 0;
-
             int [] recebeTipo = criandoJogadoresValidos(numJogadores, cor, esc);
             for (int h=0; h < numJogadores; h++){
                 tipos.add(recebeTipo[h]);
             }
+
             if(tipos.size() < 2){
                     tela.mostrarErro("é necessário ter pelo menos dois tipos diferentes de jogador!");
                     tabuleiro.getJogadores().clear();
@@ -63,7 +54,6 @@ public class JogoFacade {
                 tela.mostrarIniciandoJogo();
             }
             
-
         }
     }
 
@@ -76,7 +66,6 @@ public class JogoFacade {
             while(!corValida){
                 tela.pedirCorJogador(i+1);
                 esc = Teclado.nextInt();
-
                 boolean corRepetida = false;
                 for(int j = 0; j < i; j++){
                     if(cor[j] == esc){
@@ -84,14 +73,14 @@ public class JogoFacade {
                         break;
                     }
                 }
-
                 if(corRepetida){
-                    tela.mostrarErro("essa cor já foi escolhida. Ten  te outra.");
+                    tela.mostrarErro("essa cor já foi escolhida. Tente outra.");
                 } else {
                     cor[i] = esc;
                     corValida = true;
                 }
             }
+
             switch(esc){
                 case 1:
                     jogadorTipo[i] = escolherJogador("Azul");
@@ -125,25 +114,15 @@ public class JogoFacade {
         while(flag == true){ // TEM QUE TER PELO MENOS DOIS TIPOS DIFERENTES = TODOS NÃO PODEM SER IGUAIS
             tela.pedirTipoJogador(cor);
             tipo = Teclado.nextInt();
-            switch(tipo){
-                case 1:
-                    tabuleiro.adicionarJogadores(new Sortudo(cor, indice));
-                    flag = false;
-                    tipo = 1;
-                    break;
-                case 2:
-                    tabuleiro.adicionarJogadores(new Normal(cor, indice));
-                    flag = false;
-                    tipo = 2;
-                    break;
-                case 3:
-                    tabuleiro.adicionarJogadores(new Azarado(cor, indice));
-                    flag = false;
-                    tipo = 3;
-                    break;
-                default:
-                    tela.mostrarErro("tipo inválido, tente novamente");
+            if(tipo < 1 || tipo > 3){
+                tela.mostrarErro("tipo inválido, tente novamente");
+                continue; // Pula para a próxima iteração do loop
             }
+            else{
+                flag = false; // Tipo válido, sai do loop
+            }
+            tabuleiro.adicionarJogadores(JogadorFactory.criarJogador(cor, indice, tipo));
+            
             indice++; 
         }
         return tipo;
@@ -162,7 +141,7 @@ public class JogoFacade {
 
     public void printTabuleiro() {
         Tabuleiro tabuleiro = Tabuleiro.getInstancia();
-        System.out.println("\n📍 Estado atual do tabuleiro:");
+        tela.saidaGeral("\n📍 Estado atual do tabuleiro:");
         for (int i = 0; i < tabuleiro.getCasas().size(); i++) {
             String jogadoresNaCasa = "";
             for (int j = 0; j < tabuleiro.getJogadores().size(); j++) {
@@ -191,7 +170,7 @@ public class JogoFacade {
             	jogadorVitorioso = modoJogo.Debug(rodada, tabuleiro);
             }
             else {
-            	System.out.println("Escolha inválida!");
+            	tela.saidaGeral("Escolha inválida!");
             }    
         }
         tela.finalJogo(jogadorVitorioso, rodada, tabuleiro);

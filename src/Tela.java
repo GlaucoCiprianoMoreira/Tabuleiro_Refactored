@@ -34,6 +34,12 @@ public class Tela {
         darDelay(2000);
     }
 
+    public void saidaGeral(String mensagem){
+        limparTela();
+        System.out.println(mensagem);
+        darDelay(2000);
+    }
+
     public void pedirNumJogadores(){
         limparTela();
         titulo("configurando");
