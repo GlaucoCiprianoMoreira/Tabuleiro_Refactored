@@ -5,77 +5,76 @@ import java.util.Scanner;
 public class Modo {
     private Scanner Teclado = Entrada.getScanner();
 
-    private int modo;
-
+    private static final Tela tela = new Tela();
 
     public int getModo() {
-        System.out.println("Você deseja jogar no modo normal ou Debug? \n1 - Normal\n2 - Debug");
+        tela.pedirModo();
         int modo = Teclado.nextInt();
         Teclado.nextLine();
         switch (modo) {
             case 1:
-                System.out.println("Você escolheu o modo normal.");
+                tela.mostrarModo("normal");
                 break;
             case 2:
-                System.out.println("Você escolheu o modo debug.");
+                tela.mostrarModo("debug");
                 break;
             default:
-                System.out.println("Modo inválido, escolha novamente.");
+                tela.mostrarErro("modo inválido, escolha novamente.");
                 return getModo();
         }
         return modo;
     }
 
     public int Debug(int rodada, Tabuleiro tabuleiro) {
-    System.out.println("Você escolheu o modo debug.");
-    System.out.println("No modo debug, você pode escolher a casa que o jogador irá andar.");
-    System.out.println("Digite o número da casa (entre 0 e " + (tabuleiro.getCasas().size() - 1) + ") ou -1 para sair do modo debug.");
+        System.out.println("Você escolheu o modo debug.");
+        System.out.println("No modo debug, você pode escolher a casa que o jogador irá andar.");
+        System.out.println("Digite o número da casa (entre 0 e " + (tabuleiro.getCasas().size() - 1) + ") ou -1 para sair do modo debug.");
 
-    for (int i = 0; i < tabuleiro.getJogadores().size(); i++) {
-        Jogador jogador = tabuleiro.getJogadores().get(i);
+        for (int i = 0; i < tabuleiro.getJogadores().size(); i++) {
+            Jogador jogador = tabuleiro.getJogadores().get(i);
 
-        if (jogador.getPodeJogar()) {
-            System.out.println("\n\nRodada " + rodada);
-            System.out.println("- - - VEZ DO JOGADOR " + jogador.getCor().toUpperCase() + " - - -");
+            if (jogador.getPodeJogar()) {
+                System.out.println("\n\nRodada " + rodada);
+                System.out.println("- - - VEZ DO JOGADOR " + jogador.getCor().toUpperCase() + " - - -");
 
-            int casa = -2;
-            while (true) {
-                System.out.print("Digite o número da casa desejada (ou -1 para sair): ");
-                casa = Teclado.nextInt();
+                int casa = -2;
+                while (true) {
+                    System.out.print("Digite o número da casa desejada (ou -1 para sair): ");
+                    casa = Teclado.nextInt();
 
-                if (casa == -1) {
-                    System.out.println("Saindo do modo debug...");
-                    return -1;
+                    if (casa == -1) {
+                        System.out.println("Saindo do modo debug...");
+                        return -1;
+                    }
+
+                    if (casa >= 0 && casa < tabuleiro.getCasas().size()) {
+                        break;
+                    } else {
+                        System.out.println("Casa inválida! Digite um valor entre 0 e " + (tabuleiro.getCasas().size() - 1));
+                    }
                 }
 
-                if (casa >= 0 && casa < tabuleiro.getCasas().size()) {
-                    break;
-                } else {
-                    System.out.println("Casa inválida! Digite um valor entre 0 e " + (tabuleiro.getCasas().size() - 1));
+                // Atualizar posição e aplicar efeito
+                tabuleiro.setCasaJogador(i, casa);
+                String mensagem = tabuleiro.getCasas().get(casa).aplicarEfeito(jogador);
+                System.out.println(mensagem);
+
+                // Verificar se jogador venceu
+                if (casa == tabuleiro.getCasas().size() - 1) {
+                    System.out.println("Jogador " + jogador.getCor() + " venceu!");
+                    return i; // retorna o índice do jogador vencedor, ou use outro valor especial se preferir
                 }
+
+            } else {
+                int pos = tabuleiro.getCasaJogador(i);
+                String mensagem = tabuleiro.getCasas().get(pos).aplicarEfeito(jogador);
+                System.out.println("\n\nRodada " + rodada);
+                System.out.println(mensagem);
             }
-
-            // Atualizar posição e aplicar efeito
-            tabuleiro.setCasaJogador(i, casa);
-            String mensagem = tabuleiro.getCasas().get(casa).aplicarEfeito(jogador);
-            System.out.println(mensagem);
-
-            // Verificar se jogador venceu
-            if (casa == tabuleiro.getCasas().size() - 1) {
-                System.out.println("Jogador " + jogador.getCor() + " venceu!");
-                return i; // retorna o índice do jogador vencedor, ou use outro valor especial se preferir
-            }
-
-        } else {
-            int pos = tabuleiro.getCasaJogador(i);
-            String mensagem = tabuleiro.getCasas().get(pos).aplicarEfeito(jogador);
-            System.out.println("\n\nRodada " + rodada);
-            System.out.println(mensagem);
         }
-    }
 
-    return -1; 
-}
+        return -1; 
+    }
 
 
 

@@ -6,27 +6,28 @@ import java.util.Set;
 
 public class JogoFacade {
     private static final Scanner Teclado = Entrada.getScanner();
+    private static final Tela tela = new Tela();
 
     public JogoFacade(){
 
     }
     public int getNumJogadores() {
-        System.out.print("Digite o número de jogadores (entre 2 e 6): ");
+        tela.pedirNumJogadores();
         int numJogadores = Teclado.nextInt();
         Teclado.nextLine(); // Limpar o buffer do scanner
         if(numJogadores < 2 || numJogadores > 6) {
-            System.out.println("Número de jogadores inválido! Deve ser entre 2 e 6.");
+            tela.mostrarErro("número de jogadores inválido! Deve ser entre 2 e 6.");
             return getNumJogadores(); // Chama recursivamente até obter um valor válido
         }
         return numJogadores;
     }   
 
     public int getNumCasas() {
-        System.out.print("Digite o número de casas do tabuleiro: ");
+        tela.pedirNumCasas();
         int numCasas = Teclado.nextInt();
         Teclado.nextLine(); // Limpar o buffer do scanner
-        if(numCasas < 9 || numCasas > 100) {
-            System.out.println("Número de casas inválido! Deve ser entre 10 e 100.");
+        if(numCasas < 10 || numCasas > 100) {
+            tela.mostrarErro("Número de casas inválido! Deve ser entre 10 e 100.");
             return getNumCasas(); // Chama recursivamente até obter um valor válido
         }
         return numCasas;
@@ -37,8 +38,8 @@ public class JogoFacade {
         tabuleiro.getJogadores().clear(); // Limpa a lista de jogadores antes de iniciar
         Set<Integer> tipos  = new HashSet<>();
         int certo = -1;
-        while (certo ==-1){
-            while(numJogadores < 2 || numJogadores > 6){
+        while (certo == -1){
+            /*while(numJogadores < 2 || numJogadores > 6){
                 System.out.print("Digite o número de jogadores: ");
                 numJogadores = Teclado.nextInt();
                 if(numJogadores < 2){
@@ -46,7 +47,7 @@ public class JogoFacade {
                 }else if(numJogadores > 6){
                     System.out.println("Número máximo de jogadores é 6.");
                 }
-            }
+            }*/
             int[] cor = new int[numJogadores];
             int esc = 0;
 
@@ -55,14 +56,12 @@ public class JogoFacade {
                 tipos.add(recebeTipo[h]);
             }
             if(tipos.size() < 2){
-                    System.out.println("É necessário ter pelo menos dois tipos diferentes de jogador!");
+                    tela.mostrarErro("é necessário ter pelo menos dois tipos diferentes de jogador!");
                     tabuleiro.getJogadores().clear();
-                    System.out.println("Recomençando o jogo!");
             } else {
                 certo = 0;
+                tela.mostrarIniciandoJogo();
             }
-            System.out.println("Jogadores criados com sucesso!");
-            System.out.println("Iniciando o jogo...");
             
 
         }
@@ -75,14 +74,7 @@ public class JogoFacade {
             boolean corValida = false;
 
             while(!corValida){
-                System.out.println("Jogador " + (i + 1) + ", escolha a cor:");
-                System.out.println("1 - Azul");
-                System.out.println("2 - Verde");    
-                System.out.println("3 - Amarelo");
-                System.out.println("4 - Laranja");
-                System.out.println("5 - Vermelho");
-                System.out.println("6 - Rosa");
-                System.out.print("-> ");
+                tela.pedirCorJogador(i+1);
                 esc = Teclado.nextInt();
 
                 boolean corRepetida = false;
@@ -94,7 +86,7 @@ public class JogoFacade {
                 }
 
                 if(corRepetida){
-                    System.out.println("Essa cor já foi escolhida. Ten  te outra.");
+                    tela.mostrarErro("essa cor já foi escolhida. Ten  te outra.");
                 } else {
                     cor[i] = esc;
                     corValida = true;
@@ -131,11 +123,7 @@ public class JogoFacade {
         Tabuleiro tabuleiro = Tabuleiro.getInstancia();
         int tipo = 0;
         while(flag == true){ // TEM QUE TER PELO MENOS DOIS TIPOS DIFERENTES = TODOS NÃO PODEM SER IGUAIS
-            System.out.println("Escolha o tipo do jogador:");
-            System.out.println("1 - Sortudo:");
-            System.out.println("2 - Normal:");
-            System.out.println("3 - Azarado:");
-            System.out.print("-> ");
+            tela.pedirTipoJogador(cor);
             tipo = Teclado.nextInt();
             switch(tipo){
                 case 1:
@@ -154,7 +142,7 @@ public class JogoFacade {
                     tipo = 3;
                     break;
                 default:
-                    System.out.println("Tipo inválido, tente novamente");
+                    tela.mostrarErro("tipo inválido, tente novamente");
             }
             indice++; 
         }
@@ -165,17 +153,8 @@ public class JogoFacade {
         Tabuleiro tabuleiro = Tabuleiro.getInstancia();
         FactoryCasa factoryCasa = new FactoryCasa();
         tabuleiro.getCasas().clear(); // Limpa a lista de casas antes de iniciar
-        System.out.println("Configuração do tabuleiro:");
         for(int i =0; i < numCasas; i++){
-            System.out.println("Escolha o tipo da casa " + (i + 1) + ":");
-            System.out.println("1 - Casa Surpresa");
-            System.out.println("2 - Casa Normal");
-            System.out.println("3 - Casa Azar");
-            System.out.println("4 - Casa Sorte");
-            System.out.println("5 - Casa Reversa");
-            System.out.println("6 - Casa Prisão");
-            System.out.println("7 - Casa Jogar de Novo");
-            System.out.print("-> ");
+            tela.pedirTipoCasa(i+1);
             int escolha = Teclado.nextInt();
             tabuleiro.adicionarCasa(factoryCasa.fazerCasa(escolha));
         }
