@@ -6,6 +6,7 @@ public class Normal extends Jogador {
         super(cor, indice);
     }
 
+    @Override
     public int rolarDados(){
         dado1.rolar();
         dado2.rolar();
