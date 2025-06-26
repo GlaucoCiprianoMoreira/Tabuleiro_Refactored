@@ -35,9 +35,16 @@ public class Tela {
     }
 
     public void saidaGeral(String mensagem){
-        limparTela();
         System.out.println(mensagem);
         darDelay(2000);
+    }
+
+    public void saidaSimples(String mensagem){
+        System.out.print(mensagem + " ");
+    }
+
+    public void saidaVariavel(String variavel){
+        System.out.print(variavel + " ");
     }
 
     public void pedirNumJogadores(){
