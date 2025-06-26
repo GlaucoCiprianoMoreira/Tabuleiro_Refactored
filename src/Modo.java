@@ -51,7 +51,6 @@ public class Modo {
 
     public int Normal(int rodada, Tabuleiro tabuleiro) {
         int resultado = 0;
-        tabuleiro = Tabuleiro.getInstancia();
         System.out.println("Você escolheu o modo normal.");
         for (int i=0; i<tabuleiro.getJogadores().size(); i++) {  
             System.out.println("\n\nRodada " + rodada);
@@ -78,6 +77,10 @@ public class Modo {
                 String mensagem = tabuleiro.getCasas().get(tabuleiro.getCasaJogador(i)).aplicarEfeito(tabuleiro.getJogadores().get(i));
                 System.out.println("\n\nRodada " + rodada);
                 System.out.println(mensagem);
+            }
+            if (tabuleiro.getCasaJogador(i) >= tabuleiro.getCasas().size() - 1) {
+                System.out.println("Jogador " + tabuleiro.getJogadores().get(i).getCor() + " venceu!");
+                return i; 
             }
         }
     	return -1;

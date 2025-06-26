@@ -11,6 +11,8 @@ public abstract class Jogador{
         this.cor = cor;
         this.indice = indice;
         this.podeJogar = true;
+        this.dado1 = new Dado();
+        this.dado2 = new Dado();
     }
     public abstract int rolarDados();
 

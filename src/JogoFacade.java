@@ -5,10 +5,12 @@ import java.util.Scanner;
 import java.util.Set;
 
 public class JogoFacade {
-    private static Tabuleiro tabuleiro; 
     private static final Scanner Teclado = Entrada.getScanner();
-    
-    public static int getNumJogadores() {
+
+    public JogoFacade(){
+
+    }
+    public int getNumJogadores() {
         System.out.print("Digite o número de jogadores (entre 2 e 6): ");
         int numJogadores = Teclado.nextInt();
         Teclado.nextLine(); // Limpar o buffer do scanner
@@ -19,7 +21,7 @@ public class JogoFacade {
         return numJogadores;
     }   
 
-    public static int getNumCasas() {
+    public int getNumCasas() {
         System.out.print("Digite o número de casas do tabuleiro: ");
         int numCasas = Teclado.nextInt();
         Teclado.nextLine(); // Limpar o buffer do scanner
@@ -31,6 +33,8 @@ public class JogoFacade {
     }
 
     public void config(int numJogadores){
+        Tabuleiro tabuleiro = Tabuleiro.getInstancia();
+        tabuleiro.getJogadores().clear(); // Limpa a lista de jogadores antes de iniciar
         Set<Integer> tipos  = new HashSet<>();
         int certo = -1;
         while (certo ==-1){
@@ -158,8 +162,10 @@ public class JogoFacade {
     }
 
     public void configTabuleiro(int numCasas) {
+        Tabuleiro tabuleiro = Tabuleiro.getInstancia();
         FactoryCasa factoryCasa = new FactoryCasa();
-        tabuleiro = Tabuleiro.getInstancia();
+        tabuleiro.getCasas().clear(); // Limpa a lista de casas antes de iniciar
+        System.out.println("Configuração do tabuleiro:");
         for(int i =0; i < numCasas; i++){
             System.out.println("Escolha o tipo da casa " + (i + 1) + ":");
             System.out.println("1 - Casa Surpresa");
@@ -180,10 +186,10 @@ public class JogoFacade {
     }
 
     public void startJogo(){
+        Tabuleiro tabuleiro = Tabuleiro.getInstancia();
+        tabuleiro.criarCasaJogador();
         Modo modoJogo = new Modo();
         int modo = modoJogo.getModo();
-        int numJogadores = getNumJogadores();
-        Tabuleiro tabuleiro = Tabuleiro.getInstancia();
         int rodada = 0;
         int jogadorVitorioso = -1;
         while(jogadorVitorioso == -1){
