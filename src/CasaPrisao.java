@@ -2,7 +2,7 @@ package src;
 public class CasaPrisao extends Casa{
     @Override
     public String aplicarEfeito(Jogador jogador){
-        if (jogador.getPodeJogar() == false){ 
+        if (!jogador.getPodeJogar()){ 
             jogador.setPodeJogar(true);
             return "Agora você pode jogar";
         }else{

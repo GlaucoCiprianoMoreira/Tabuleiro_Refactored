@@ -7,7 +7,7 @@ public class CasaSurpresa extends Casa {
         Tabuleiro tabuleiro = Tabuleiro.getInstancia();
         Random random = new Random();
         int tipo = random.nextInt(3) + 1;
-        System.out.println("\nCarta sorteada:" + tipo);
+        Tela.casaSurpresaTela(tipo);
         switch (tipo) {
             case 1:
                 tabuleiro.getJogadores().set(jogador.getIndice(), new Normal(tabuleiro.getJogadores().get(jogador.getIndice()).getCor(), jogador.getIndice()));
@@ -18,7 +18,7 @@ public class CasaSurpresa extends Casa {
             case 3:
                 tabuleiro.getJogadores().set(jogador.getIndice(), new Sortudo(tabuleiro.getJogadores().get(jogador.getIndice()).getCor(), jogador.getIndice()));
                 return "Jogador agora é sortudo.\n";
-                
+             
         }
         return null;
     }

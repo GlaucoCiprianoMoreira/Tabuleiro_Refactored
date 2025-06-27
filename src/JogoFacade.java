@@ -9,7 +9,7 @@ public class JogoFacade {
     private static final Tela tela = new Tela();
 
     public JogoFacade(){
-
+        // Construtor vazio
     }
 
     public int getNumJogadores() {
@@ -138,29 +138,18 @@ public class JogoFacade {
         Tabuleiro tabuleiro = Tabuleiro.getInstancia();
         FactoryCasa factoryCasa = new FactoryCasa();
         tabuleiro.getCasas().clear(); // Limpa a lista de casas antes de iniciar
-        for(int i =0; i < numCasas; i++){
-            tela.pedirTipoCasa(i+1);
+        int casasAdicionadas = 0;
+        int casaAtual = 1;
+        while (casasAdicionadas < numCasas) {
+            tela.pedirTipoCasa(casaAtual);
             int escolha = Teclado.nextInt();
-            if(escolha < 1 || escolha > 7) {
+            if (escolha < 1 || escolha > 7) {
                 tela.mostrarErro("Tipo de casa inválido! Tente novamente.");
-                i--;
-                continue; // Pula para a próxima iteração do loop
+                continue; // Pede novamente para a mesma casa
             }
             tabuleiro.adicionarCasa(factoryCasa.fazerCasa(escolha));
-        }
-    }
-
-    public void printTabuleiro() {
-        Tabuleiro tabuleiro = Tabuleiro.getInstancia();
-        tela.saidaGeral("\n📍 Estado atual do tabuleiro:");
-        for (int i = 0; i < tabuleiro.getCasas().size(); i++) {
-            String jogadoresNaCasa = "";
-            for (int j = 0; j < tabuleiro.getJogadores().size(); j++) {
-                if (tabuleiro.getCasaJogador(j) == i) {
-                    jogadoresNaCasa += "[" + tabuleiro.getJogadores().get(j).getCor().charAt(0) + "]";
-                }
-            }
-            System.out.println("Casa " + i + ": " + jogadoresNaCasa);
+            casasAdicionadas++;
+            casaAtual++;
         }
     }
 
@@ -175,10 +164,10 @@ public class JogoFacade {
         while(jogadorVitorioso == -1){
             rodada++;
             if (modo == 1) {
-            	jogadorVitorioso = modoJogo.Normal(rodada, tabuleiro); 
+            	jogadorVitorioso = modoJogo.jogarNormal(rodada, tabuleiro); 
             }
             else if (modo ==2) {
-            	jogadorVitorioso = modoJogo.Debug(rodada, tabuleiro);
+            	jogadorVitorioso = modoJogo.jogarDebug(rodada, tabuleiro);
             }
             else {
             	tela.escolhaInvalidaModo();

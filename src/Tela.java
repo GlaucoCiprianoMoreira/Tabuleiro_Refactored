@@ -1,6 +1,8 @@
 package src;
 
 public class Tela {
+    private static final String RODADA = "\n\nRodada ";
+
     private void limparTela(){
         try {
             String os = System.getProperty("os.name");
@@ -177,13 +179,13 @@ public class Tela {
 
     public void rodadaJogadorDebug(int rodada, Jogador jogador){
         limparTela();
-        System.out.println("\n\nRodada " + rodada);
+        System.out.println(RODADA + rodada);
         System.out.println("- - - VEZ DO JOGADOR " + jogador.getCor().toUpperCase() + " - - -");
     }
 
     public void rodadaJogadorNormal(int rodada, Jogador jogador){
         limparTela();
-        System.out.println("\n\nRodada " + rodada);
+        System.out.println(RODADA + rodada);
         System.out.println("- - - VEZ DO JOGADOR " + jogador.getCor().toUpperCase() + " - - -");
         System.out.println("Pressione 1 para rolar os dados ou 2 para passar a rodada.");
         System.out.print("-> ");
@@ -205,7 +207,7 @@ public class Tela {
     }
 
     public void jogadorNaoPodeJogar(int rodada, String mensagem){
-        System.out.println("\n\nRodada " + rodada);
+        System.out.println(RODADA + rodada);
         System.out.println(mensagem);
     }
 
@@ -361,9 +363,13 @@ public class Tela {
         mostrarTabuleiro();
     }
 
+    public static void casaSurpresaTela(int tipo){
+        System.out.println("\nCarta sorteada:" + tipo);
+    }
+
     public void finalJogo(int  jogadorVitorioso, int rodada, Tabuleiro tabuleiro){
         titulo("fim de jogo");
-        System.out.println("\nRodada " + rodada + " - Fim de jogo!");
+        System.out.println(RODADA + rodada + " - Fim de jogo!");
         System.out.println("Jogador " + tabuleiro.getJogadores().get(jogadorVitorioso).getCor() + " vitorioso.");
         System.out.println("Número de jogadas dos jogadores:");
         for (int j=0; j<tabuleiro.getJogadores().size(); j++) {
