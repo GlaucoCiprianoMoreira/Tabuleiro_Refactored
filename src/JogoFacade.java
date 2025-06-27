@@ -67,6 +67,10 @@ public class JogoFacade {
             while(!corValida){
                 tela.pedirCorJogador(i+1);
                 esc = Teclado.nextInt();
+                if(esc < 1 || esc > 6){
+                    tela.mostrarErro("Cor inválida! Tente novamente! \nEscolha entre 1 e 6.");
+                    continue; // Pula para a próxima iteração do loop
+                }
                 boolean corRepetida = false;
                 for(int j = 0; j < i; j++){
                     if(cor[j] == esc){
@@ -176,7 +180,7 @@ public class JogoFacade {
             	jogadorVitorioso = modoJogo.Debug(rodada, tabuleiro);
             }
             else {
-            	tela.saidaGeral("Escolha inválida!");
+            	tela.escolhaInvalidaModo();
             }    
         }
         tela.finalJogo(jogadorVitorioso, rodada, tabuleiro);
