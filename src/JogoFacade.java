@@ -1,5 +1,6 @@
 package src;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
@@ -137,6 +138,49 @@ public class JogoFacade {
     public void configTabuleiro(int numCasas) {
         Tabuleiro tabuleiro = Tabuleiro.getInstancia();
         FactoryCasa factoryCasa = new FactoryCasa();
+<<<<<<< HEAD
+        
+        tela.pedirNumCasasEspeciais();
+        int numCasasEspeciais = Teclado.nextInt();
+        ArrayList<Integer> casasEspeciais = new ArrayList<>();
+        for(int i = 0; i < numCasasEspeciais; i++){
+            tela.pedirCasaEspecial(i + 1);
+            int casa = Teclado.nextInt();
+            casasEspeciais.add(casa);
+        }
+        
+        tabuleiro.adicionarCasa(factoryCasa.fazerCasa(0)); //casas 0 criada
+        tabuleiro.getCasas().clear();
+        for (int i = 0; i < numCasas; i++) {
+            if (casasEspeciais.contains(i)) {
+                tela.pedirTipoCasa(i);
+                int escolha = Teclado.nextInt();
+
+                if (escolha < 1 || escolha > 7) {
+                    tela.mostrarErro("Tipo de casa inválido! Tente novamente.");
+                    i--;
+                    continue;
+                }
+
+                tabuleiro.adicionarCasa(factoryCasa.fazerCasa(escolha));
+            } else {
+                tabuleiro.adicionarCasa(factoryCasa.fazerCasa(0));
+            }
+        }
+    }
+
+    public void printTabuleiro() {
+        Tabuleiro tabuleiro = Tabuleiro.getInstancia();
+        tela.saidaGeral("\n📍 Estado atual do tabuleiro:");
+        for (int i = 0; i < tabuleiro.getCasas().size(); i++) {
+            String jogadoresNaCasa = "";
+            for (int j = 0; j < tabuleiro.getJogadores().size(); j++) {
+                if (tabuleiro.getCasaJogador(j) == i) {
+                    jogadoresNaCasa += "[" + tabuleiro.getJogadores().get(j).getCor().charAt(0) + "]";
+                }
+            }
+            System.out.println("Casa " + i + ": " + jogadoresNaCasa);
+=======
         tabuleiro.getCasas().clear(); // Limpa a lista de casas antes de iniciar
         int casasAdicionadas = 0;
         int casaAtual = 1;
@@ -150,6 +194,7 @@ public class JogoFacade {
             tabuleiro.adicionarCasa(factoryCasa.fazerCasa(escolha));
             casasAdicionadas++;
             casaAtual++;
+>>>>>>> 1868eca5ce2aa42ec5e01cbf8663d11ee6f82cc0
         }
     }
 

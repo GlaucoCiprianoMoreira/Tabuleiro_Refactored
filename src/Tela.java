@@ -64,18 +64,31 @@ public class Tela {
         System.out.print("Digite o número de casas do tabuleiro [ 10 - 100 ]\n-> ");
     }
 
+    public void pedirNumCasasEspeciais(){
+        limparTela();
+        titulo("configurando");
+
+        System.out.print("Digite o número de casas especiais\n-> ");
+    }
+
+    public void pedirCasaEspecial(int iesima){
+        limparTela();
+        titulo("configurando");
+
+        System.out.print("Digite a " + iesima + "º casa especial\n-> ");
+    }
+
     public void pedirTipoCasa(int casa){
         limparTela();
         titulo("configurando casa " + casa);
 
         System.out.println("Escolha o tipo da casa " + casa + ":");
         System.out.println("1 - Casa Surpresa");
-        System.out.println("2 - Casa Normal");
-        System.out.println("3 - Casa Azar");
-        System.out.println("4 - Casa Sorte");
-        System.out.println("5 - Casa Reversa");
-        System.out.println("6 - Casa Prisão");
-        System.out.println("7 - Casa Jogar de Novo");
+        System.out.println("2 - Casa Azar");
+        System.out.println("3 - Casa Sorte");
+        System.out.println("4 - Casa Reversa");
+        System.out.println("5 - Casa Prisão");
+        System.out.println("6 - Casa Jogar de Novo");
         System.out.print("-> ");
     }
 
@@ -128,16 +141,16 @@ public class Tela {
                     tempoDelay = 100;
                     break;
                 default:
-                    tempoDelay = 20;
+                    tempoDelay = 5;
                     break;
             }
 
-            System.out.print("+---------------------------------------+\n|");
+            System.out.println("+---".repeat(10) + "+");
             for(int j = 1; j <= 10; j++){
-                System.out.print(j <= i ? "III|" : "   |");
+                System.out.print(j <= i ? "| I " : "|   ");
             }
-            System.out.println(" ~ " + (i * 10) + "%");
-            System.out.println("+---------------------------------------+");
+            System.out.println("| ~ " + (i * 10) + "%");
+            System.out.println("+---".repeat(10) + "+");
             
             darDelay(tempoDelay);
         }

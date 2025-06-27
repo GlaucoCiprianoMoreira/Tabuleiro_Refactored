@@ -2,19 +2,19 @@ package src;
 public class FactoryCasa {
     public Casa fazerCasa(int escolha) {
         switch (escolha) {
+            case 0:
+                return new CasaNormal();
             case 1:
                 return new CasaSurpresa();
             case 2:
-                return new CasaNormal();
-            case 3:
                 return new CasaAzar();
-            case 4:
+            case 3:
                 return new CasaSorte();
-            case 5:
+            case 4:
                 return new CasaReversa();
-            case 6:
+            case 5:
                 return new CasaPrisao();
-            case 7:
+            case 6:
                 return new CasaJogarDeNovo();
             default:
                 throw new IllegalArgumentException("Escolha inválida: " + escolha);
