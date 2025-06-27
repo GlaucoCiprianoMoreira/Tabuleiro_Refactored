@@ -34,6 +34,19 @@ public class Tela {
         darDelay(2000);
     }
 
+    public void saidaGeral(String mensagem){
+        System.out.println(mensagem);
+        darDelay(2000);
+    }
+
+    public void saidaSimples(String mensagem){
+        System.out.print(mensagem + " ");
+    }
+
+    public void saidaVariavel(int variavel){
+        System.out.print(String.valueOf(variavel) + " ");
+    }
+
     public void pedirNumJogadores(){
         limparTela();
         titulo("configurando");
@@ -265,5 +278,16 @@ public class Tela {
         titulo(modo + " - jogador " + corJogador);
 
         mostrarTabuleiro();
+    }
+
+    public void finalJogo(int  jogadorVitorioso, int rodada, Tabuleiro tabuleiro){
+        limparTela();
+        titulo("fim de jogo");
+        System.out.println("\nRodada " + rodada + " - Fim de jogo!");
+        System.out.println("Jogador " + tabuleiro.getJogadores().get(jogadorVitorioso).getCor() + " vitorioso.");
+        System.out.println("Número de jogadas dos jogadores:");
+        for (int j=0; j<tabuleiro.getJogadores().size(); j++) {
+        	System.out.println("Número de jogadas do jogador " + tabuleiro.getJogadores().get(j).getCor() + " é " + tabuleiro.getJogadores().get(j).getNumJogadas());
+        }
     }
 }

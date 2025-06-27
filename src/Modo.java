@@ -26,82 +26,80 @@ public class Modo {
     }
 
     public int Debug(int rodada, Tabuleiro tabuleiro) {
-        System.out.println("Você escolheu o modo debug.");
-        System.out.println("No modo debug, você pode escolher a casa que o jogador irá andar.");
-        System.out.println("Digite o número da casa (entre 0 e " + (tabuleiro.getCasas().size() - 1) + ") ou -1 para sair do modo debug.");
+        tela.saidaGeral("Você escolheu o modo debug.");
+        tela.saidaGeral("No modo debug, você pode escolher a casa que o jogador irá andar.");
+        tela.saidaSimples("Digite o número da casa (entre 0 e "); tela.saidaVariavel(tabuleiro.getCasas().size()-1); tela.saidaGeral(") ou -1 para sair do modo debug.");
+
 
         for (int i = 0; i < tabuleiro.getJogadores().size(); i++) {
             Jogador jogador = tabuleiro.getJogadores().get(i);
 
             if (jogador.getPodeJogar()) {
-                System.out.println("\n\nRodada " + rodada);
-                System.out.println("- - - VEZ DO JOGADOR " + jogador.getCor().toUpperCase() + " - - -");
+                tela.saidaSimples("\n\nRodada "); tela.saidaVariavel(rodada); tela.saidaGeral("");
+                tela.saidaSimples("- - - VEZ DO JOGADOR "); tela.saidaSimples(jogador.getCor().toUpperCase()); tela.saidaGeral("");
 
                 int casa = -2;
                 while (true) {
-                    System.out.print("Digite o número da casa desejada (ou -1 para sair): ");
+                    tela.saidaGeral("Digite o número da casa desejada (ou -1 para sair): ");
                     casa = Teclado.nextInt();
 
                     if (casa == -1) {
-                        System.out.println("Saindo do modo debug...");
+                        tela.saidaGeral("Saindo do modo debug...");
                         return -1;
                     }
 
                     if (casa >= 0 && casa < tabuleiro.getCasas().size()) {
                         break;
                     } else {
-                        System.out.println("Casa inválida! Digite um valor entre 0 e " + (tabuleiro.getCasas().size() - 1));
+                        tela.saidaSimples("Casa inválida! Digite um valor entre 0 e "); tela.saidaVariavel((tabuleiro.getCasas().size() - 1)); tela.saidaGeral(".");
                     }
                 }
 
                 // Atualizar posição e aplicar efeito
                 tabuleiro.setCasaJogador(i, casa);
                 String mensagem = tabuleiro.getCasas().get(casa).aplicarEfeito(jogador);
-                System.out.println(mensagem);
+                tela.saidaGeral(mensagem);
 
                 // Verificar se jogador venceu
                 if (casa == tabuleiro.getCasas().size() - 1) {
-                    System.out.println("Jogador " + jogador.getCor() + " venceu!");
+                    tela.saidaSimples("Jogador "); tela.saidaSimples(jogador.getCor()); tela.saidaGeral(" venceu!");
                     return i; // retorna o índice do jogador vencedor, ou use outro valor especial se preferir
                 }
 
             } else {
                 int pos = tabuleiro.getCasaJogador(i);
                 String mensagem = tabuleiro.getCasas().get(pos).aplicarEfeito(jogador);
-                System.out.println("\n\nRodada " + rodada);
-                System.out.println(mensagem);
+                tela.saidaSimples("\n\nRodada "); tela.saidaVariavel((rodada)); tela.saidaGeral("");
+                tela.saidaGeral(mensagem);
             }
         }
 
         return -1; 
     }
 
-
-
     public int Normal(int rodada, Tabuleiro tabuleiro) {
         int resultado = 0;
-        System.out.println("Você escolheu o modo normal.");
+        tela.saidaGeral("Você escolheu o modo normal.");
 
         for (int i = 0; i < tabuleiro.getJogadores().size(); i++) {
             Jogador jogador = tabuleiro.getJogadores().get(i);
-            System.out.println("\n\nRodada " + rodada);
-            tela.pedirAcaoJogador("normal", jogador.getCor());
-            System.out.println("- - - VEZ DO JOGADOR " + jogador.getCor().toUpperCase() + " - - -");
+            tela.saidaSimples("\n\nRodada "); tela.saidaVariavel((rodada)); tela.saidaGeral(".");
+            tela.saidaSimples("- - - VEZ DO JOGADOR "); tela.saidaSimples(jogador.getCor().toUpperCase()); tela.saidaGeral(".");
 
             if (jogador.getPodeJogar()) {
-                System.out.println("Vez do jogador " + jogador.getCor());
-                System.out.println("Pressione 1 - para rolar os dados 2 - Passar Rodada.");
+                tela.saidaSimples("\n\nVez do jogador "); tela.saidaSimples(jogador.getCor()); tela.saidaGeral(".");
+                tela.saidaGeral("Pressione 1 para rolar os dados ou 2 para passar a rodada.");
                 int esc = Teclado.nextInt();
 
                 if (esc == 2) {
-                    System.out.println("Rodada passada.");
+                    tela.saidaGeral("Rodada passada.");
                     continue;
                 } else if (esc == 1) {
-                    System.out.println("Rolando os dados...");
+                    tela.saidaGeral("Rolando os dados...");
                     jogador.getDado1().rolar();
                     jogador.getDado2().rolar();
                     resultado = jogador.getDado1().getValor() + jogador.getDado2().getValor();
-                    System.out.println("Resultado dos dados: " + resultado);
+                    tela.saidaSimples("Resultado dos dados: "); tela.saidaVariavel((resultado)); tela.saidaGeral(".");
 
                     int novaPosicao = tabuleiro.getCasaJogador(i) + resultado;
                     int ultimaCasa = tabuleiro.getCasas().size() - 1;
@@ -111,10 +109,10 @@ public class Modo {
 
                     tabuleiro.setCasaJogador(i, novaPosicao);
                     String mensagem = tabuleiro.getCasas().get(novaPosicao).aplicarEfeito(jogador);
-                    System.out.println(mensagem);
+                    tela.saidaGeral(mensagem);
 
                     if (novaPosicao == ultimaCasa) {
-                        System.out.println("Jogador " + jogador.getCor() + " venceu!");
+                        tela.saidaSimples("Jogador "); tela.saidaSimples(jogador.getCor()); tela.saidaGeral(" venceu!");
                         return i;
                     }
                 }
@@ -122,8 +120,8 @@ public class Modo {
             } else {
                 int pos = tabuleiro.getCasaJogador(i);
                 String mensagem = tabuleiro.getCasas().get(pos).aplicarEfeito(jogador);
-                System.out.println("\n\nRodada " + rodada);
-                System.out.println(mensagem);
+                tela.saidaSimples("\n\nRodada "); tela.saidaVariavel((rodada)); tela.saidaGeral(".");
+                tela.saidaGeral(mensagem);
             }
         }
 
