@@ -10,7 +10,7 @@ public class JogoFacade {
     private static final Tela tela = new Tela();
 
     public JogoFacade(){
-
+        // Construtor vazio
     }
 
     public int getNumJogadores() {
@@ -138,6 +138,7 @@ public class JogoFacade {
     public void configTabuleiro(int numCasas) {
         Tabuleiro tabuleiro = Tabuleiro.getInstancia();
         FactoryCasa factoryCasa = new FactoryCasa();
+<<<<<<< HEAD
         
         tela.pedirNumCasasEspeciais();
         int numCasasEspeciais = Teclado.nextInt();
@@ -179,6 +180,21 @@ public class JogoFacade {
                 }
             }
             System.out.println("Casa " + i + ": " + jogadoresNaCasa);
+=======
+        tabuleiro.getCasas().clear(); // Limpa a lista de casas antes de iniciar
+        int casasAdicionadas = 0;
+        int casaAtual = 1;
+        while (casasAdicionadas < numCasas) {
+            tela.pedirTipoCasa(casaAtual);
+            int escolha = Teclado.nextInt();
+            if (escolha < 1 || escolha > 7) {
+                tela.mostrarErro("Tipo de casa inválido! Tente novamente.");
+                continue; // Pede novamente para a mesma casa
+            }
+            tabuleiro.adicionarCasa(factoryCasa.fazerCasa(escolha));
+            casasAdicionadas++;
+            casaAtual++;
+>>>>>>> 1868eca5ce2aa42ec5e01cbf8663d11ee6f82cc0
         }
     }
 
@@ -193,10 +209,10 @@ public class JogoFacade {
         while(jogadorVitorioso == -1){
             rodada++;
             if (modo == 1) {
-            	jogadorVitorioso = modoJogo.Normal(rodada, tabuleiro); 
+            	jogadorVitorioso = modoJogo.jogarNormal(rodada, tabuleiro); 
             }
             else if (modo ==2) {
-            	jogadorVitorioso = modoJogo.Debug(rodada, tabuleiro);
+            	jogadorVitorioso = modoJogo.jogarDebug(rodada, tabuleiro);
             }
             else {
             	tela.escolhaInvalidaModo();

@@ -3,11 +3,12 @@ package src;
 public abstract class Jogador{
     protected int indice;
     protected String cor;
-    protected Dado dado1, dado2;
+    protected Dado dado1;
+    protected Dado dado2;
     protected boolean podeJogar;
     protected int numJogadas;
     
-    public Jogador(String cor, int indice){
+    protected Jogador(String cor, int indice){
         this.cor = cor;
         this.indice = indice;
         this.podeJogar = true;

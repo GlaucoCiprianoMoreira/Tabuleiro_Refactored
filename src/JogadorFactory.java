@@ -1,6 +1,10 @@
 package src;
 
 public class JogadorFactory {
+    private JogadorFactory() {
+        // Construtor privado para evitar instância
+    }
+    
     public static Jogador criarJogador(String cor, int indice, int escolha) {
         switch (escolha) {
             case 1:
