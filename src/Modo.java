@@ -85,6 +85,7 @@ public class Modo {
         for (int i = 0; i < tabuleiro.getJogadores().size(); i++) {
             Jogador jogador = tabuleiro.getJogadores().get(i);
             System.out.println("\n\nRodada " + rodada);
+            tela.pedirAcaoJogador("normal", jogador.getCor());
             System.out.println("- - - VEZ DO JOGADOR " + jogador.getCor().toUpperCase() + " - - -");
 
             if (jogador.getPodeJogar()) {

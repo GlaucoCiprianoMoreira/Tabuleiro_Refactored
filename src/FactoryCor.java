@@ -1,6 +1,6 @@
 package src;
 
-public class CorFactory {
+public class FactoryCor {
 	
 	public static Cor instanciarCor(int id) {
 		switch(id) {
