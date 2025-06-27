@@ -238,80 +238,69 @@ public class Tela {
     }
     
     private void mostrarLinha(Tabuleiro tabuleiro, int decrescente, int casasLinha, int casaInicial){
-        System.out.println(" ".repeat(decrescente * (96 - (casasLinha * 4))) + "+---".repeat(casasLinha) + "+");
+        String prefix = " ".repeat(decrescente * (96 - (casasLinha * 4)));
+        System.out.println(prefix + "+---".repeat(casasLinha) + "+");
 
-        //System.out.println(" ".repeat(decrescente * (96 - (casasLinha * 4))) + "|   ".repeat(casasLinha) + "|");
-        
         if(decrescente == 0){
-            for(int i = casaInicial; i < (casaInicial + casasLinha); i++){
-                System.out.print("|");
-                for(int j = 0; j < 3; j++){
-                    if(tabuleiro.getJogadores().size() - 1 < j) {
-                        System.out.print(" ");
-                        continue;
-                    }
-                    if(tabuleiro.getCasaJogador(j) == i) System.out.print("P");
-                    else System.out.print(" ");
-                }
-            }
-            System.out.println("|");
-
-            for(int i = casaInicial; i < (casaInicial + casasLinha); i++){
-                if(i < 10) System.out.print("| " + i + " ");
-                else if(i < 100) System.out.print("|" + (i / 10) + " " + (i % 10));
-                else System.out.print("|" + i + "");
-            }
-            System.out.println("|");
-
-            for(int i = casaInicial; i < (casaInicial + casasLinha); i++){
-                System.out.print("|");
-                for(int j = 2; j < 5; j++){
-                    if(tabuleiro.getJogadores().size() - 1 < j) {
-                        System.out.print(" ");
-                        continue;
-                    }
-                    if(tabuleiro.getCasaJogador(j) == i) System.out.print("P");
-                    else System.out.print(" ");
-                }
-            }
-            System.out.println("|");
+            mostrarJogadoresLinha(tabuleiro, casaInicial, casasLinha, 0, 3);
+            mostrarNumeracaoLinha(casaInicial, casasLinha, false);
+            mostrarJogadoresLinha(tabuleiro, casaInicial, casasLinha, 2, 5);
         }else{
             System.out.print(" ".repeat(96 - (casasLinha * 4)));
-            for(int i = casasLinha; i > 0; i--){
-                System.out.print("|");
-                for(int j = 0; j < 3; j++){
-                    if(tabuleiro.getJogadores().size() - 1 < j) {
-                        System.out.print(" ");
-                        continue;
-                    }
-                    if(tabuleiro.getCasaJogador(j) == i) System.out.print("P");
-                    else System.out.print(" ");
-                }
-            }
-            System.out.println("|");
-
+            mostrarJogadoresLinhaInvertida(tabuleiro, casaInicial, casasLinha, 0, 3);
             System.out.print(" ".repeat(96 - (casasLinha * 4)));
-            for(int i = casasLinha; i > 0; i--){
-                System.out.print("|" + (((casaInicial - 1) + i) / 10) + " " + (((casaInicial - 1) + i) % 10) + "");
-            }
-            System.out.println("|");
-
+            mostrarNumeracaoLinhaInvertida(casaInicial, casasLinha);
             System.out.print(" ".repeat(96 - (casasLinha * 4)));
-            for(int i = casasLinha; i > 0; i--){
-                System.out.print("|");
-                for(int j = 2; j < 5; j++){
-                    if(tabuleiro.getJogadores().size() - 1 < j) {
-                        System.out.print(" ");
-                        continue;
-                    }
-                    if(tabuleiro.getCasaJogador(j) == i) System.out.print("P");
-                    else System.out.print(" ");
-                }
-            }
-            System.out.println("|");
+            mostrarJogadoresLinhaInvertida(tabuleiro, casaInicial, casasLinha, 2, 5);
         }
 
-        System.out.println(" ".repeat(decrescente * (96 - (casasLinha * 4))) + "+---".repeat(casasLinha) + "+");
+        System.out.println(prefix + "+---".repeat(casasLinha) + "+");
+    }
+
+    private void mostrarJogadoresLinha(Tabuleiro tabuleiro, int casaInicial, int casasLinha, int jogadorInicio, int jogadorFim) {
+        for(int i = casaInicial; i < (casaInicial + casasLinha); i++){
+            System.out.print("|");
+            for(int j = jogadorInicio; j < jogadorFim; j++){
+                if(tabuleiro.getJogadores().size() - 1 < j) {
+                    System.out.print(" ");
+                    continue;
+                }
+                if(tabuleiro.getCasaJogador(j) == i) System.out.print("P");
+                else System.out.print(" ");
+            }
+        }
+        System.out.println("|");
+    }
+
+    private void mostrarNumeracaoLinha(int casaInicial, int casasLinha, boolean invertida) {
+        for(int i = casaInicial; i < (casaInicial + casasLinha); i++){
+            if(i < 10) System.out.print("| " + i + " ");
+            else if(i < 100) System.out.print("|" + (i / 10) + " " + (i % 10));
+            else System.out.print("|" + i + "");
+        }
+        System.out.println("|");
+    }
+
+    private void mostrarJogadoresLinhaInvertida(Tabuleiro tabuleiro, int casaInicial, int casasLinha, int jogadorInicio, int jogadorFim) {
+        for(int i = casasLinha; i > 0; i--){
+            System.out.print("|");
+            for(int j = jogadorInicio; j < jogadorFim; j++){
+                if(tabuleiro.getJogadores().size() - 1 < j) {
+                    System.out.print(" ");
+                    continue;
+                }
+                if(tabuleiro.getCasaJogador(j) == ((casaInicial - 1) + i)) System.out.print("P");
+                else System.out.print(" ");
+            }
+        }
+        System.out.println("|");
+    }
+
+    private void mostrarNumeracaoLinhaInvertida(int casaInicial, int casasLinha) {
+        for(int i = casasLinha; i > 0; i--){
+            System.out.print("|" + (((casaInicial - 1) + i) / 10) + " " + (((casaInicial - 1) + i) % 10) + "");
+        }
+        System.out.println("|");
     }
 
     private void mostrarCasaConexao(int x, int totalCasas, int casa){
@@ -321,39 +310,61 @@ public class Tela {
         if(totalCasas == casa) System.out.println(" ".repeat(92 * x) + "+---+");
     }
 
-    private void mostrarTabuleiro(){
+    private void mostrarTabuleiro() {
         Tabuleiro tabuleiro = Tabuleiro.getInstancia();
 
         int numCasas = tabuleiro.getCasas().size();
         int casasPrimeiraLinha = Math.min(numCasas, 23) + 1;
-        int casasTerceiraLinha = 0;
-        if(numCasas > 24) casasTerceiraLinha = Math.min(numCasas - 24, 24);
-        int casasQuintaLinha = 0;
-        if(numCasas > 49) casasQuintaLinha = Math.min(numCasas - 49, 24);
-        int casasSetimaLinha = 0;
-        if(numCasas > 74) casasSetimaLinha = Math.min(numCasas - 74, 24);
+        int casasTerceiraLinha = (numCasas > 24) ? Math.min(numCasas - 24, 24) : 0;
+        int casasQuintaLinha = (numCasas > 49) ? Math.min(numCasas - 49, 24) : 0;
+        int casasSetimaLinha = (numCasas > 74) ? Math.min(numCasas - 74, 24) : 0;
 
+        // Primeira linha (sempre crescente)
         mostrarLinha(tabuleiro, 0, casasPrimeiraLinha, 0);
 
-        if(numCasas >= 24) mostrarCasaConexao(1, numCasas, 24);
-        else return;
+        if (numCasas >= 24) {
+            mostrarCasaConexao(1, numCasas, 24);
+        } else {
+            return;
+        }
 
-        if(numCasas > 24) mostrarLinha(tabuleiro, 1, casasTerceiraLinha, 25);
-        
-        if(numCasas >= 49) mostrarCasaConexao(0, numCasas, 49);
-        else return;
+        // Segunda linha (decrescente)
+        if (casasTerceiraLinha > 0) {
+            mostrarLinha(tabuleiro, 1, casasTerceiraLinha, 25);
+        }
 
-        if(numCasas > 49) mostrarLinha(tabuleiro, 0, casasQuintaLinha, 50);
-        
-        if(numCasas >= 74) mostrarCasaConexao(1, numCasas, 74);
-        else return;
+        if (numCasas >= 49) {
+            mostrarCasaConexao(0, numCasas, 49);
+        } else {
+            return;
+        }
 
-        if(numCasas > 74) mostrarLinha(tabuleiro, 1, casasSetimaLinha, 75);
-        
-        if(numCasas >= 99) mostrarCasaConexao(0, numCasas, 99);
-        else return;
+        // Terceira linha (crescente)
+        if (casasQuintaLinha > 0) {
+            mostrarLinha(tabuleiro, 0, casasQuintaLinha, 50);
+        }
 
-        if(numCasas == 100) mostrarLinha(tabuleiro, 0, 1, 100);
+        if (numCasas >= 74) {
+            mostrarCasaConexao(1, numCasas, 74);
+        } else {
+            return;
+        }
+
+        // Quarta linha (decrescente)
+        if (casasSetimaLinha > 0) {
+            mostrarLinha(tabuleiro, 1, casasSetimaLinha, 75);
+        }
+
+        if (numCasas >= 99) {
+            mostrarCasaConexao(0, numCasas, 99);
+        } else {
+            return;
+        }
+
+        // Última casa (100)
+        if (numCasas == 100) {
+            mostrarLinha(tabuleiro, 0, 1, 100);
+        }
     }
 
     public void pedirAcaoJogador(String modo, String corJogador){

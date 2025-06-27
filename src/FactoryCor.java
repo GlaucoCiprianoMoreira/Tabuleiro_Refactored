@@ -2,6 +2,10 @@ package src;
 
 public class FactoryCor {
 	
+    private FactoryCor() {
+        // Construtor privado para evitar instância
+    }
+
 	public static Cor instanciarCor(int id) {
 		switch(id) {
 		  case 1:

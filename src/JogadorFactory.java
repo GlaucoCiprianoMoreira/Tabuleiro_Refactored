@@ -13,8 +13,9 @@ public class JogadorFactory {
                 return new Normal(cor, indice);
             case 3:
                 return new Azarado(cor, indice);
+            default:
+                throw new IllegalArgumentException("Tipo de jogador inválido: " + escolha);
         }
-        return null;
     }
             
 }
