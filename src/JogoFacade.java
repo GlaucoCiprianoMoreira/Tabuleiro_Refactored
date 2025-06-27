@@ -1,5 +1,6 @@
 package src;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
@@ -137,16 +138,33 @@ public class JogoFacade {
     public void configTabuleiro(int numCasas) {
         Tabuleiro tabuleiro = Tabuleiro.getInstancia();
         FactoryCasa factoryCasa = new FactoryCasa();
-        tabuleiro.getCasas().clear(); // Limpa a lista de casas antes de iniciar
-        for(int i =0; i < numCasas; i++){
-            tela.pedirTipoCasa(i+1);
-            int escolha = Teclado.nextInt();
-            if(escolha < 1 || escolha > 7) {
-                tela.mostrarErro("Tipo de casa inválido! Tente novamente.");
-                i--;
-                continue; // Pula para a próxima iteração do loop
+        
+        tela.pedirNumCasasEspeciais();
+        int numCasasEspeciais = Teclado.nextInt();
+        ArrayList<Integer> casasEspeciais = new ArrayList<>();
+        for(int i = 0; i < numCasasEspeciais; i++){
+            tela.pedirCasaEspecial(i + 1);
+            int casa = Teclado.nextInt();
+            casasEspeciais.add(casa);
+        }
+        
+        tabuleiro.adicionarCasa(factoryCasa.fazerCasa(0)); //casas 0 criada
+        tabuleiro.getCasas().clear();
+        for (int i = 0; i < numCasas; i++) {
+            if (casasEspeciais.contains(i)) {
+                tela.pedirTipoCasa(i);
+                int escolha = Teclado.nextInt();
+
+                if (escolha < 1 || escolha > 7) {
+                    tela.mostrarErro("Tipo de casa inválido! Tente novamente.");
+                    i--;
+                    continue;
+                }
+
+                tabuleiro.adicionarCasa(factoryCasa.fazerCasa(escolha));
+            } else {
+                tabuleiro.adicionarCasa(factoryCasa.fazerCasa(0));
             }
-            tabuleiro.adicionarCasa(factoryCasa.fazerCasa(escolha));
         }
     }
 
