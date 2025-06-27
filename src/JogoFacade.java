@@ -58,79 +58,80 @@ public class JogoFacade {
         }
     }
 
-    public static  int[] criandoJogadoresValidos(int numJogadores, int[] cor, int esc){
-        int [] jogadorTipo = new int [numJogadores];
-        for(int i = 0; i < numJogadores; i++){
-            
-            boolean corValida = false;
+    public static  int[] criandoJogadoresValidos(int numJogadores, int[] cor, int esc) {
+        int[] jogadorTipo = new int[numJogadores];
+        for (int i = 0; i < numJogadores; i++) {
+            cor[i] = escolherCorJogador(i + 1, cor, i);
+            jogadorTipo[i] = escolherTipoJogadorPorCor(cor[i]);
+        }
 
-            while(!corValida){
-                tela.pedirCorJogador(i+1);
-                esc = Teclado.nextInt();
-                if(esc < 1 || esc > 6){
-                    tela.mostrarErro("Cor inválida! Tente novamente! \nEscolha entre 1 e 6.");
-                    continue; // Pula para a próxima iteração do loop
-                }
-                boolean corRepetida = false;
-                for(int j = 0; j < i; j++){
-                    if(cor[j] == esc){
-                        corRepetida = true;
-                        break;
-                    }
-                }
-                if(corRepetida){
-                    tela.mostrarErro("essa cor já foi escolhida. Tente outra.");
-                } else {
-                    cor[i] = esc;
-                    corValida = true;
-                }
-            }
-
-            switch(esc){
-                case 1:
-                    jogadorTipo[i] = escolherJogador("Azul");
-                    break;
-                case 2:
-                    jogadorTipo[i] = escolherJogador("Verde");
-                    break;
-                case 3:
-                    jogadorTipo[i] = escolherJogador("Amarelo");
-                    break;
-                case 4:
-                    jogadorTipo[i] = escolherJogador("Laranja");
-                    break;
-                case 5:
-                    jogadorTipo[i] = escolherJogador("Vermelho");
-                    break;
-                case 6:
-                    jogadorTipo[i] = escolherJogador("Rosa");
-                    break;                      
-            }
+        // Verifica se há pelo menos dois tipos diferentes
+        Set<Integer> tipos = new HashSet<>();
+        for (int tipo : jogadorTipo) {
+            tipos.add(tipo);
+        }
+        if (tipos.size() < 2) {
+            tela.mostrarErro("É necessário ter pelo menos dois tipos diferentes de jogador!");
+            Tabuleiro.getInstancia().getJogadores().clear();
+            return new int[0];
         }
 
         return jogadorTipo;
     }
 
-    public static int escolherJogador(String cor){
-        boolean flag = true;
-        int indice = 0;
+    private static int escolherCorJogador(int jogadorNum, int[] cor, int atual) {
+        while (true) {
+            tela.pedirCorJogador(jogadorNum);
+            int esc = Teclado.nextInt();
+            if (esc < 1 || esc > 6) {
+                tela.mostrarErro("Cor inválida! Tente novamente! Escolha entre 1 e 6.");
+                continue;
+            }
+            boolean corRepetida = false;
+            for (int j = 0; j < atual; j++) {
+                if (cor[j] == esc) {
+                    corRepetida = true;
+                    break;
+                }
+            }
+            if (corRepetida) {
+                tela.mostrarErro("Essa cor já foi escolhida. Tente outra.");
+            } else {
+                return esc;
+            }
+        }
+    }
+
+    private static int escolherTipoJogadorPorCor(int cor) {
+        String corNome = corParaNome(cor);
+        return escolherTipoJogador(corNome);
+    }
+
+    private static String corParaNome(int cor) {
+        switch (cor) {
+            case 1: return "Azul";
+            case 2: return "Verde";
+            case 3: return "Amarelo";
+            case 4: return "Laranja";
+            case 5: return "Vermelho";
+            case 6: return "Rosa";
+            default: return "Desconhecida";
+        }
+    }
+
+    private static int escolherTipoJogador(String cor) {
         Tabuleiro tabuleiro = Tabuleiro.getInstancia();
-        int tipo = 0;
-        while(flag == true){ // TEM QUE TER PELO MENOS DOIS TIPOS DIFERENTES = TODOS NÃO PODEM SER IGUAIS
+        int tipo;
+        while (true) {
             tela.pedirTipoJogador(cor);
             tipo = Teclado.nextInt();
-            if(tipo < 1 || tipo > 3){
+            if (tipo < 1 || tipo > 3) {
                 tela.mostrarErro("tipo inválido, tente novamente");
-                continue; // Pula para a próxima iteração do loop
+                continue;
             }
-            else{
-                flag = false; // Tipo válido, sai do loop
-            }
-            tabuleiro.adicionarJogadores(JogadorFactory.criarJogador(cor, indice, tipo));
-            
-            indice++; 
+            tabuleiro.adicionarJogadores(JogadorFactory.criarJogador(cor, 0, tipo));
+            return tipo;
         }
-        return tipo;
     }
 
     public void configTabuleiro(int numCasas) {
