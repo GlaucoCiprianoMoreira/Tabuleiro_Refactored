@@ -166,95 +166,15 @@ public class Tela {
         System.out.print("-> ");
     }
 
-    public void escolhaInvalidaModo(){
-        limparTela();
-        System.out.println("Escolha inválida! Digite 1 para modo normal ou 2 para modo debug.");
-        darDelay(2000);
-    }
-
     public void mostrarModo(String modo){
         System.out.println("\n=================================================\n");
         System.out.println("Modo escolhido: " + modo.toUpperCase());
         darDelay(1000);
     }
-
-    public void inicioDebug(Tabuleiro tabuleiro){
-        limparTela();
-        System.out.println("Você escolheu o modo debug.");
-        System.out.println("No modo debug, você pode escolher a casa que o jogador irá andar.");
-        System.out.println("Digite o número da casa (entre 0 e " + (tabuleiro.getCasas().size() - 1) + ") ou -1 para sair do modo debug.");
-    }
-
-    public void inicioNormal(){
-        limparTela();
-        System.out.println("Você escolheu o modo normal.");
-    }
-
-    public void rodadaJogadorDebug(int rodada, Jogador jogador){
-        limparTela();
-        System.out.println(RODADA + rodada);
-        System.out.println("- - - VEZ DO JOGADOR " + jogador.getCor().toUpperCase() + " - - -");
-    }
-
-    public void rodadaJogadorNormal(int rodada, Jogador jogador){
-        limparTela();
-        System.out.println(RODADA + rodada);
-        System.out.println("- - - VEZ DO JOGADOR " + jogador.getCor().toUpperCase() + " - - -");
-        System.out.println("Pressione 1 para rolar os dados ou 2 para passar a rodada.");
-        System.out.print("-> ");
-    }
-    public void rodadaPassadaNormal(){
-        limparTela();
-        System.out.println("Rodada passada.");
-        darDelay(2000);
-    }
-
-    public void rolandoDados(){
-        System.out.println("Rolando os dados...");
-        darDelay(2000);
-    }
-
-    public void resultadoDados(int resultado){
-        System.out.println("Resultado dos dados: " + resultado);
-        darDelay(2000);
-    }
-
-    public void jogadorNaoPodeJogar(int rodada, String mensagem){
-        System.out.println(RODADA + rodada);
-        System.out.println(mensagem);
-    }
-
-    public void casaDesejadaDebug(){
-        System.out.print("Digite o número da casa desejada (ou -1 para sair): ");
-    }
-
-    public void saindoDebug(){
-        System.out.println("Saindo do modo debug...");
-        darDelay(2000);
-    }
-
-    public void casaInvalidaDebug(Tabuleiro tabuleiro){
-        limparTela();
-        System.out.println("Casa inválida! Digite um valor entre 0 e " + (tabuleiro.getCasas().size() - 1));
-    }
-
-    public void mensagemDebug(String mensagem){
-        System.out.println(mensagem);
-    }
-
-    public void posicaoJogador(Jogador jogador, int posicao){
-        System.out.println("Jogador " + jogador.getCor() + " está na casa " + posicao);
-    }
-
-    public void jogadorVenceu(Jogador jogador){
-        System.out.println("Jogador " + jogador.getCor() + " venceu!");
-    }
     
     private void mostrarLinha(Tabuleiro tabuleiro, int decrescente, int casasLinha, int casaInicial){
         System.out.println(" ".repeat(decrescente * (96 - (casasLinha * 4))) + "+---".repeat(casasLinha) + "+");
 
-        //System.out.println(" ".repeat(decrescente * (96 - (casasLinha * 4))) + "|   ".repeat(casasLinha) + "|");
-        
         if(decrescente == 0){
             for(int i = casaInicial; i < (casaInicial + casasLinha); i++){
                 System.out.print("|");
@@ -297,7 +217,8 @@ public class Tela {
                         System.out.print(" ");
                         continue;
                     }
-                    if(tabuleiro.getCasaJogador(j) == i) System.out.print("P");
+                    int casaAtual = (casaInicial - 1) + i;
+                    if(tabuleiro.getCasaJogador(j) == casaAtual) System.out.print("P");
                     else System.out.print(" ");
                 }
             }
@@ -323,7 +244,6 @@ public class Tela {
             }
             System.out.println("|");
         }
-
         System.out.println(" ".repeat(decrescente * (96 - (casasLinha * 4))) + "+---".repeat(casasLinha) + "+");
     }
 
@@ -369,6 +289,21 @@ public class Tela {
         if(numCasas == 100) mostrarLinha(tabuleiro, 0, 1, 100);
     }
 
+    private void mostrarCasa(Tabuleiro tabuleiro, int novaPosicao, Jogador jogador){
+        String mensagem = tabuleiro.getCasas().get(novaPosicao).aplicarEfeito(jogador);
+        String casaInfo = "Casa: " + novaPosicao;
+
+        System.out.println("\n+-----" + "-".repeat(mensagem.length()) + "-----+");
+
+        int espacoEsquerda = (mensagem.length() - casaInfo.length()) / 2;
+        int espacoDireita = mensagem.length() - (espacoEsquerda) - casaInfo.length();
+        System.out.println("|     " + " ".repeat(espacoEsquerda) + casaInfo + " ".repeat(espacoDireita) + "     |");
+
+        System.out.println("+-----" + "-".repeat(mensagem.length()) + "-----+");
+        System.out.println("|     " + mensagem + "     |");
+        System.out.println("+-----" + "-".repeat(mensagem.length()) + "-----+");
+    }
+
     public void pedirAcaoJogador(String modo, String corJogador){
         limparTela();
         titulo(modo + " - jogador " + corJogador);
@@ -376,17 +311,101 @@ public class Tela {
         mostrarTabuleiro();
     }
 
+    public void inicioDebug(Tabuleiro tabuleiro){
+        limparTela();
+        System.out.println("Você escolheu o modo debug.");
+        System.out.println("No modo debug, você pode escolher a casa que o jogador irá andar.");
+        System.out.println("Digite o número da casa (entre 0 e " + (tabuleiro.getCasas().size() - 1) + ") ou -1 para sair do modo debug.");
+    }
+
+    public void rodadaJogadorDebug(int rodada, Jogador jogador){
+        limparTela();
+        System.out.println(RODADA + rodada);
+        System.out.println("- - - VEZ DO JOGADOR " + jogador.getCor().toUpperCase() + " - - -");
+    }
+
+    public void rodadaJogadorNormal(int rodada, Jogador jogador){
+        titulo("vez do jogador " + jogador.getCor());
+
+        System.out.println("R O D A D A   " + rodada + "\n");
+        System.out.println("PRESSIONE");
+        System.out.println("1 para rolar os dados");
+        System.out.println("2 para passar a rodada");
+        System.out.print("-> ");
+    }
+
+    public void jogadorNaoPodeJogar(int rodada, Jogador jogador){
+        titulo("vez do jogador " + jogador.getCor());
+
+        System.out.println("R O D A D A   " + rodada + "\n");
+        System.out.println("Jogador " + jogador.getCor() + " não pode jogar nessa rodada.");
+    }
+
+    public void mostrarTabuleiroAposRodada(Tabuleiro tabuleiro, int novaPosicao, int rodada, Jogador jogador){
+        titulo("vez do jogador " + jogador.getCor());
+
+        mostrarTabuleiro();
+        mostrarCasa(tabuleiro, novaPosicao, jogador);
+
+        System.out.print("Digite 0 para continuar\n-> ");
+    }
+
+    public void rodadaPassadaNormal(int rodada, Jogador jogador){
+        titulo("rodada " + rodada);
+        System.out.println("Jogador " + jogador.getCor() + " decidiu pular esta rodada.");
+        darDelay(2000);
+    }
+
+    public void rolandoDados(){
+        System.out.println("Rolando os dados...");
+        darDelay(2000);
+    }
+
+    public void resultadoDados(int resultado){
+        System.out.println("Resultado dos dados: " + resultado);
+        darDelay(2000);
+    }
+
+    
+
+    public void casaDesejadaDebug(){
+        System.out.print("Digite o número da casa desejada (ou -1 para sair): ");
+    }
+
+    public void saindoDebug(){
+        System.out.println("Saindo do modo debug...");
+        darDelay(2000);
+    }
+
+    public void casaInvalidaDebug(Tabuleiro tabuleiro){
+        limparTela();
+        System.out.println("Casa inválida! Digite um valor entre 0 e " + (tabuleiro.getCasas().size() - 1));
+    }
+
+    public void mensagemDebug(String mensagem){
+        System.out.println(mensagem);
+    }
+
+    public void posicaoJogador(Jogador jogador, int posicao){
+        System.out.println("Jogador " + jogador.getCor() + " está na casa " + posicao);
+    }
+
+    public void jogadorVenceu(Jogador jogador){
+        System.out.println("Jogador " + jogador.getCor() + " venceu!");
+    }
+    
     public static void casaSurpresaTela(int tipo){
         System.out.println("\nCarta sorteada:" + tipo);
     }
 
     public void finalJogo(int  jogadorVitorioso, int rodada, Tabuleiro tabuleiro){
         titulo("fim de jogo");
-        System.out.println(RODADA + rodada + " - Fim de jogo!");
-        System.out.println("Jogador " + tabuleiro.getJogadores().get(jogadorVitorioso).getCor() + " vitorioso.");
-        System.out.println("Número de jogadas dos jogadores:");
-        for (int j=0; j<tabuleiro.getJogadores().size(); j++) {
-        	System.out.println("Número de jogadas do jogador " + tabuleiro.getJogadores().get(j).getCor() + " é " + tabuleiro.getJogadores().get(j).getNumJogadas());
+
+        System.out.println("PARABÉNS, JOGADOR " + tabuleiro.getJogadores().get(jogadorVitorioso).getCor() + "!! VOCÊ VENCEU!!!");
+        
+        System.out.println("\nNúmero de jogadas de cada jogador:");
+        for(int i = 0; i < tabuleiro.getJogadores().size(); i++){
+            System.out.println(tabuleiro.getJogadores().get(i).getCor() + ": " + tabuleiro.getJogadores().get(i).getNumJogadas() + " jogadas");
         }
     }
 }

@@ -46,17 +46,15 @@ public class Modo {
                     return i;
                 }
             } else {
-                tratarJogadorNaoPodeJogar(rodada, tabuleiro, i, jogador);
+                tela.jogadorNaoPodeJogar(rodada, jogador);
             }
         }
         return -1;
     }
 
     public int jogarNormal(int rodada, Tabuleiro tabuleiro) {
-        tela.inicioNormal();
         for (int i = 0; i < tabuleiro.getJogadores().size(); i++) {
             Jogador jogador = tabuleiro.getJogadores().get(i);
-            tela.rodadaJogadorNormal(rodada, jogador);
 
             if (jogador.getPodeJogar()) {
                 incrementarJogadas(jogador);
@@ -64,10 +62,15 @@ public class Modo {
 
                 int esc = Teclado.nextInt();
                 if (esc == 2) {
-                    tela.rodadaPassadaNormal();
+                    tela.rodadaPassadaNormal(rodada, jogador);
                 } else if (esc == 1) {
                     int novaPosicao = rolarEDeterminarNovaPosicao(tabuleiro, i, jogador);
-                    aplicarEfeitoEExibirNormal(tabuleiro, novaPosicao, jogador);
+                    tela.mostrarTabuleiroAposRodada(tabuleiro, novaPosicao, rodada, jogador);
+                    int zeroParaContinuar = Teclado.nextInt();
+                    while (zeroParaContinuar != 0) {
+                        tela.mostrarTabuleiroAposRodada(tabuleiro, novaPosicao, rodada, jogador);
+                        zeroParaContinuar = Teclado.nextInt();
+                    }
 
                     if (novaPosicao == tabuleiro.getCasas().size() - 1) {
                         tela.jogadorVenceu(jogador);
@@ -75,7 +78,7 @@ public class Modo {
                     }
                 }
             } else {
-                tratarJogadorNaoPodeJogar(rodada, tabuleiro, i, jogador);
+                tela.jogadorNaoPodeJogar(rodada, jogador);
             }
         }
         return -1;
@@ -124,17 +127,5 @@ public class Modo {
         String mensagem = tabuleiro.getCasas().get(casa).aplicarEfeito(jogador);
         tela.mensagemDebug(mensagem);
         tela.posicaoJogador(jogador, casa);
-    }
-
-    private void aplicarEfeitoEExibirNormal(Tabuleiro tabuleiro, int novaPosicao, Jogador jogador) {
-        String mensagem = tabuleiro.getCasas().get(novaPosicao).aplicarEfeito(jogador);
-        tela.saidaGeral(mensagem);
-        tela.posicaoJogador(jogador, novaPosicao);
-    }
-
-    private void tratarJogadorNaoPodeJogar(int rodada, Tabuleiro tabuleiro, int i, Jogador jogador) {
-        int pos = tabuleiro.getCasaJogador(i);
-        String mensagem = tabuleiro.getCasas().get(pos).aplicarEfeito(jogador);
-        tela.jogadorNaoPodeJogar(rodada, mensagem);
     }
 }
