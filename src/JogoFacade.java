@@ -1,9 +1,9 @@
 package src;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.ArrayList;
 
 public class JogoFacade {
     private static final Scanner Teclado = Entrada.getScanner();
@@ -43,7 +43,7 @@ public class JogoFacade {
         while (certo == -1){
             int[] cor = new int[numJogadores];
             int esc = 0;
-            int [] recebeTipo = criandoJogadoresValidos(numJogadores, cor, esc);
+            int [] recebeTipo = criandoJogadoresValidos(numJogadores, cor);
             for (int h=0; h < numJogadores; h++){
                 tipos.add(recebeTipo[h]);
             }
@@ -59,7 +59,7 @@ public class JogoFacade {
         }
     }
 
-    public static  int[] criandoJogadoresValidos(int numJogadores, int[] cor, int esc) {
+    public static  int[] criandoJogadoresValidos(int numJogadores, int[] cor) {
         int[] jogadorTipo = new int[numJogadores];
         for (int i = 0; i < numJogadores; i++) {
             cor[i] = escolherCorJogador(i + 1, cor, i);
@@ -181,7 +181,6 @@ public class JogoFacade {
             System.out.println("Casa " + i + ": " + jogadoresNaCasa);
         }
     }
-
 
     public void startJogo(){
         Tabuleiro tabuleiro = Tabuleiro.getInstancia();

@@ -18,9 +18,9 @@ public class CasaSurpresa extends Casa {
             case 3:
                 tabuleiro.getJogadores().set(jogador.getIndice(), new Sortudo(tabuleiro.getJogadores().get(jogador.getIndice()).getCor(), jogador.getIndice()));
                 return "Jogador agora é sortudo.\n";
-             
+            default:
+                return null;
         }
-        return null;
     }
 }
 
