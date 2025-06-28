@@ -42,7 +42,6 @@ public class JogoFacade {
         int certo = -1;
         while (certo == -1){
             int[] cor = new int[numJogadores];
-            int esc = 0;
             int [] recebeTipo = criandoJogadoresValidos(numJogadores, cor);
             for (int h=0; h < numJogadores; h++){
                 tipos.add(recebeTipo[h]);

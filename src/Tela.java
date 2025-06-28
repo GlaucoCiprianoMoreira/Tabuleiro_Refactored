@@ -1,8 +1,6 @@
 package src;
 
 public class Tela {
-    private static final String RODADA = "\n\nRodada ";
-
     private void limparTela(){
         try {
             String os = System.getProperty("os.name");
@@ -179,14 +177,14 @@ public class Tela {
         if(decrescente == 0){
             mostrarJogadoresLinha(tabuleiro, casaInicial, casasLinha, 0, 3);
             mostrarNumeracaoLinha(casaInicial, casasLinha, false);
-            mostrarJogadoresLinha(tabuleiro, casaInicial, casasLinha, 2, 5);
+            mostrarJogadoresLinha(tabuleiro, casaInicial, casasLinha, 3, 6);
         }else{
             System.out.print(" ".repeat(96 - (casasLinha * 4)));
             mostrarJogadoresLinhaInvertida(tabuleiro, casaInicial, casasLinha, 0, 3);
             System.out.print(" ".repeat(96 - (casasLinha * 4)));
             mostrarNumeracaoLinhaInvertida(casaInicial, casasLinha);
             System.out.print(" ".repeat(96 - (casasLinha * 4)));
-            mostrarJogadoresLinhaInvertida(tabuleiro, casaInicial, casasLinha, 2, 5);
+            mostrarJogadoresLinhaInvertida(tabuleiro, casaInicial, casasLinha, 3, 6);
         }
 
         System.out.println(prefix + "+---".repeat(casasLinha) + "+");
@@ -196,7 +194,7 @@ public class Tela {
         for(int i = casaInicial; i < (casaInicial + casasLinha); i++){
             System.out.print("|");
             for(int j = jogadorInicio; j < jogadorFim; j++){
-                if(tabuleiro.getJogadores().size() - 1 < j) {
+                if(j >= tabuleiro.getJogadores().size()) {
                     System.out.print(" ");
                     continue;
                 }
@@ -220,7 +218,7 @@ public class Tela {
         for(int i = casasLinha; i > 0; i--){
             System.out.print("|");
             for(int j = jogadorInicio; j < jogadorFim; j++){
-                if(tabuleiro.getJogadores().size() - 1 < j) {
+                if(j >= tabuleiro.getJogadores().size()) {
                     System.out.print(" ");
                     continue;
                 }
@@ -306,7 +304,7 @@ public class Tela {
         String mensagem = tabuleiro.getCasas().get(novaPosicao).aplicarEfeito(jogador);
         String casaInfo = "Casa: " + novaPosicao;
 
-        System.out.println("\n+-----" + "-".repeat(mensagem.length()) + "-----+");
+        System.out.println("+-----" + "-".repeat(mensagem.length()) + "-----+");
 
         int espacoEsquerda = (mensagem.length() - casaInfo.length()) / 2;
         int espacoDireita = mensagem.length() - (espacoEsquerda) - casaInfo.length();
@@ -314,7 +312,7 @@ public class Tela {
 
         System.out.println("+-----" + "-".repeat(mensagem.length()) + "-----+");
         System.out.println("|     " + mensagem + "     |");
-        System.out.println("+-----" + "-".repeat(mensagem.length()) + "-----+");
+        System.out.println("+-----" + "-".repeat(mensagem.length()) + "-----+\n");
     }
 
     public void pedirAcaoJogador(String modo, String corJogador){
@@ -332,9 +330,13 @@ public class Tela {
     }
 
     public void rodadaJogadorDebug(int rodada, Jogador jogador){
-        limparTela();
-        System.out.println(RODADA + rodada);
-        System.out.println("- - - VEZ DO JOGADOR " + jogador.getCor().toUpperCase() + " - - -");
+        titulo("vez do jogador " + jogador.getCor());
+
+        System.out.println("R O D A D A   " + rodada + "\n");
+    }
+    
+    public void casaDesejadaDebug(){
+        System.out.print("Digite o número da casa desejada (ou -1 para sair)\n-> ");
     }
 
     public void rodadaJogadorNormal(int rodada, Jogador jogador){
@@ -352,15 +354,17 @@ public class Tela {
 
         System.out.println("R O D A D A   " + rodada + "\n");
         System.out.println("Jogador " + jogador.getCor() + " não pode jogar nessa rodada.");
+
+        darDelay(3000);
     }
 
     public void mostrarTabuleiroAposRodada(Tabuleiro tabuleiro, int novaPosicao, int rodada, Jogador jogador){
         titulo("vez do jogador " + jogador.getCor());
 
-        mostrarTabuleiro();
         mostrarCasa(tabuleiro, novaPosicao, jogador);
+        mostrarTabuleiro();
 
-        System.out.print("Digite 0 para continuar\n-> ");
+        System.out.print("\nDigite 0 para continuar\n-> ");
     }
 
     public void rodadaPassadaNormal(int rodada, Jogador jogador){
@@ -377,12 +381,6 @@ public class Tela {
     public void resultadoDados(int resultado){
         System.out.println("Resultado dos dados: " + resultado);
         darDelay(2000);
-    }
-
-    
-
-    public void casaDesejadaDebug(){
-        System.out.print("Digite o número da casa desejada (ou -1 para sair): ");
     }
 
     public void saindoDebug(){

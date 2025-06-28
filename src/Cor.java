@@ -30,5 +30,7 @@ public class Cor {
                 throw new IllegalArgumentException("Nome inválido");
             }
 	}
-	
+	public String resetCor(){
+        return "\u001B[0m";
+    }
 }

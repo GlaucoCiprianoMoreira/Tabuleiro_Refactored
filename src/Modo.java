@@ -26,10 +26,8 @@ public class Modo {
     }
 
     public int jogarDebug(int rodada, Tabuleiro tabuleiro) {
-        tela.inicioDebug(tabuleiro);
         for (int i = 0; i < tabuleiro.getJogadores().size(); i++) {
             Jogador jogador = tabuleiro.getJogadores().get(i);
-            tela.rodadaJogadorDebug(rodada, jogador);
 
             if (jogador.getPodeJogar()) {
                 incrementarJogadas(jogador);
@@ -39,7 +37,12 @@ public class Modo {
                 if (casa == -1) return -1;
 
                 tabuleiro.setCasaJogador(i, casa);
-                aplicarEfeitoEExibirDebug(tabuleiro, casa, jogador);
+                tela.mostrarTabuleiroAposRodada(tabuleiro, casa, rodada, jogador);
+                int zeroParaContinuar = Teclado.nextInt();
+                while (zeroParaContinuar != 0) {
+                    tela.mostrarTabuleiroAposRodada(tabuleiro, casa, rodada, jogador);
+                    zeroParaContinuar = Teclado.nextInt();
+                }
 
                 if (casa == tabuleiro.getCasas().size() - 1) {
                     tela.jogadorVenceu(jogador);
@@ -121,11 +124,5 @@ public class Modo {
         }
         tabuleiro.setCasaJogador(i, novaPosicao);
         return novaPosicao;
-    }
-
-    private void aplicarEfeitoEExibirDebug(Tabuleiro tabuleiro, int casa, Jogador jogador) {
-        String mensagem = tabuleiro.getCasas().get(casa).aplicarEfeito(jogador);
-        tela.mensagemDebug(mensagem);
-        tela.posicaoJogador(jogador, casa);
     }
 }

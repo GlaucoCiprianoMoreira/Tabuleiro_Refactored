@@ -11,13 +11,13 @@ public class CasaSurpresa extends Casa {
         switch (tipo) {
             case 1:
                 tabuleiro.getJogadores().set(jogador.getIndice(), new Normal(tabuleiro.getJogadores().get(jogador.getIndice()).getCor(), jogador.getIndice()));
-                return "Jogador agora é normal.\n";
+                return "Jogador agora é normal.";
             case 2:
                 tabuleiro.getJogadores().set(jogador.getIndice(), new Azarado(tabuleiro.getJogadores().get(jogador.getIndice()).getCor(), jogador.getIndice()));
-                return "Jogador agora é azarado.\n";
+                return "Jogador agora é azarado.";
             case 3:
                 tabuleiro.getJogadores().set(jogador.getIndice(), new Sortudo(tabuleiro.getJogadores().get(jogador.getIndice()).getCor(), jogador.getIndice()));
-                return "Jogador agora é sortudo.\n";
+                return "Jogador agora é sortudo.";
             default:
                 return null;
         }
