@@ -6,13 +6,15 @@ public class Azarado extends Jogador {
         super(cor, indice);
     }
     @Override
-    public int rolarDados(){
-        while(true){
+    public int rolarDados() {
+        int valor1, valor2, soma;
+        do {
             dado1.rolar();
             dado2.rolar();
-            if(dado1.getValor() + dado2.getValor() <= 6) {
-                return dado1.getValor() + dado2.getValor();
-            }
-        }
+            valor1 = dado1.getValor();
+            valor2 = dado2.getValor();
+            soma = valor1 + valor2;
+        } while (soma > 6);
+        return soma;
     }
 }

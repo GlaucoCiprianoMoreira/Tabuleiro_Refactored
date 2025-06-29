@@ -112,9 +112,7 @@ public class Modo {
 
     private int rolarEDeterminarNovaPosicao(Tabuleiro tabuleiro, int i, Jogador jogador) {
         tela.rolandoDados();
-        jogador.getDado1().rolar();
-        jogador.getDado2().rolar();
-        int resultado = jogador.getDado1().getValor() + jogador.getDado2().getValor();
+        int resultado = jogador.rolarDados();
         tela.resultadoDados(resultado);
 
         int novaPosicao = tabuleiro.getCasaJogador(i) + resultado;
