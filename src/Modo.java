@@ -34,7 +34,7 @@ public class Modo {
                 tela.rodadaJogadorDebug(rodada, jogador);
 
                 int casa = obterCasaDebug(tabuleiro);
-                if (casa == -1) return -1;
+                if (casa == -1) return -2;
 
                 tabuleiro.setCasaJogador(i, casa);
                 tela.mostrarTabuleiroAposRodada(tabuleiro, casa, rodada, jogador);
@@ -99,7 +99,7 @@ public class Modo {
             tela.casaDesejadaDebug();
             casa = Teclado.nextInt();
             if (casa == -1) {
-                tela.saindoDebug();
+                tela.mensagemSimples("Saindo...");
                 return -1;
             }
             if (casa >= 0 && casa < tabuleiro.getCasas().size()) {

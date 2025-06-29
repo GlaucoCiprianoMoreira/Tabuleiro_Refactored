@@ -35,7 +35,7 @@ public class Tela {
         darDelay(2000);
     }
 
-    public void saidaGeral(String mensagem){
+    public void mensagemSimples(String mensagem){
         System.out.println(mensagem);
         darDelay(2000);
     }
@@ -380,11 +380,6 @@ public class Tela {
 
     public void resultadoDados(int resultado){
         System.out.println("Resultado dos dados: " + resultado);
-        darDelay(2000);
-    }
-
-    public void saindoDebug(){
-        System.out.println("Saindo do modo debug...");
         darDelay(2000);
     }
 

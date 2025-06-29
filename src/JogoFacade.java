@@ -200,6 +200,6 @@ public class JogoFacade {
                 tela.mostrarErro("Escolha inválida! Digite 1 para modo normal ou 2 para modo debug.");
             }
         }
-        tela.finalJogo(jogadorVitorioso, rodada, tabuleiro);
+        if(jogadorVitorioso != -2) tela.finalJogo(jogadorVitorioso, rodada, tabuleiro);
     }
 }

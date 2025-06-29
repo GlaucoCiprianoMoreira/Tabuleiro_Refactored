@@ -9,7 +9,7 @@ public class CasaJogarDeNovo extends Casa {
         }
         Tabuleiro tabuleiro = Tabuleiro.getInstancia();
         int result =tabuleiro.getJogadores().get(jogador.getIndice()).rolarDados();
-        return "Você caiu na casa de jogar novamente! Role os dados novamente. Tirou " + result + " no dado.\n";
+        return "Você caiu na casa de jogar novamente! Role os dados novamente. Tirou " + result + " no dado.";
 
     }    
 }
