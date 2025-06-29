@@ -4,33 +4,24 @@ public class CasaReversa extends Casa {
     public String aplicarEfeito(Jogador jogador) {
         Tabuleiro tabuleiro = Tabuleiro.getInstancia();
 
-        int indiceJogadorAtual = jogador.getIndice();
+        int indiceJogadorAtual = tabuleiro.getJogadores().indexOf(jogador);
         int casaAtual = tabuleiro.getCasaJogador(indiceJogadorAtual);
         int menorCasa = Integer.MAX_VALUE;
-        int indiceMenorCasa = -1;
-    
-        System.out.println("----- DEPURAÇÃO CasaReversa -----");
-        System.out.println("Jogador atual: índice=" + indiceJogadorAtual + ", casa=" + casaAtual);
+        int indiceJogadorMenorCasa = -1;
 
-        for (Jogador outroJogador : tabuleiro.getJogadores()) {
-            int indiceOutro = outroJogador.getIndice();
-            System.out.print("-> jogador " + indiceOutro);
-            if (indiceOutro != indiceJogadorAtual) {
-                int casaOutro = tabuleiro.getCasaJogador(indiceOutro);
-                System.out.println("-> Jogador " + indiceOutro + ": casa=" + casaOutro);
-
-                if (casaOutro <= menorCasa) {  // <= para incluir jogadores na mesma posição
+        for (int idx = 0; idx < tabuleiro.getJogadores().size(); idx++) {
+            if (idx != indiceJogadorAtual) {
+                int casaOutro = tabuleiro.getCasaJogador(idx);
+                if (casaOutro <= menorCasa) {
                     menorCasa = casaOutro;
-                    indiceMenorCasa = indiceOutro;
+                    indiceJogadorMenorCasa = idx;
                 }
             }
         }
 
-        System.out.println("Resultado: menorCasa=" + menorCasa + ", indiceMenorCasa=" + indiceMenorCasa);
-        
-        if (indiceMenorCasa != -1 && menorCasa <= casaAtual) {  // <= para permitir troca com quem está na mesma posição
+        if (indiceJogadorMenorCasa != -1 && menorCasa <= casaAtual) {
             tabuleiro.setCasaJogador(indiceJogadorAtual, menorCasa);
-            tabuleiro.setCasaJogador(indiceMenorCasa, casaAtual);
+            tabuleiro.setCasaJogador(indiceJogadorMenorCasa, casaAtual);
             return "Jogador trocou de lugar com o que está mais atrás.";
         } else {
             return "Não há jogadores atrás para trocar de lugar.";

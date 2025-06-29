@@ -21,7 +21,7 @@ public class FactoryCasa {
             case 6:
                 return new CasaJogarDeNovo();
             default:
-                throw new IllegalArgumentException("Escolha inválida: " + escolha);
+                return null;    
         }
 
     }

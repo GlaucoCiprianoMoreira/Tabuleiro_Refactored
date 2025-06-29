@@ -43,7 +43,7 @@ public class Modo {
                     tela.mostrarTabuleiroAposRodada(tabuleiro, casa, rodada, jogador);
                     zeroParaContinuar = Teclado.nextInt();
                 }
-
+                casa = tabuleiro.getCasaJogador(i);
                 if (casa == tabuleiro.getCasas().size()) {
                     tela.jogadorVenceu(jogador);
                     return i;
