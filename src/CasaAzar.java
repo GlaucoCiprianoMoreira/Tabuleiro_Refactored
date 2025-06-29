@@ -7,7 +7,8 @@ public class CasaAzar extends Casa {
             
         }
         Tabuleiro tabuleiro = Tabuleiro.getInstancia();
-        tabuleiro.setCasaJogador(jogador.getIndice(), tabuleiro.getCasaJogador(jogador.getIndice()) - 3);
+        int indiceReal = tabuleiro.getJogadores().indexOf(jogador);
+        tabuleiro.setCasaJogador(indiceReal, tabuleiro.getCasaJogador(indiceReal) - 3);
         return "Você tirou uma carta de azar! Volte 3 casas.";
     }
 }
