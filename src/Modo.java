@@ -44,7 +44,7 @@ public class Modo {
                     zeroParaContinuar = Teclado.nextInt();
                 }
 
-                if (casa == tabuleiro.getCasas().size() - 1) {
+                if (casa == tabuleiro.getCasas().size()) {
                     tela.jogadorVenceu(jogador);
                     return i;
                 }
@@ -102,7 +102,7 @@ public class Modo {
                 tela.mensagemSimples("Saindo...");
                 return -1;
             }
-            if (casa >= 0 && casa < tabuleiro.getCasas().size()) {
+            if (casa >= 0 && casa <= tabuleiro.getCasas().size()) {
                 return casa;
             } else {
                 tela.casaInvalidaDebug(tabuleiro);
