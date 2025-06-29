@@ -1,6 +1,10 @@
 package src;
 public class FactoryCasa {
-    public Casa fazerCasa(int escolha) {
+    private FactoryCasa() {
+        // Construtor privado para evitar instância
+    }
+    
+    public static Casa fazerCasa(int escolha) {
         switch (escolha) {
             case 0:
                 return new CasaNormal();
@@ -17,7 +21,7 @@ public class FactoryCasa {
             case 6:
                 return new CasaJogarDeNovo();
             default:
-                throw new IllegalArgumentException("Escolha inválida: " + escolha);
+                return null;    
         }
 
     }

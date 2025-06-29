@@ -301,7 +301,11 @@ public class Tela {
     }
 
     private void mostrarCasa(Tabuleiro tabuleiro, int novaPosicao, Jogador jogador){
+        if(novaPosicao>0){
+            novaPosicao = novaPosicao - 1; // Ajusta para índice de 0
+        }
         String mensagem = tabuleiro.getCasas().get(novaPosicao).aplicarEfeito(jogador);
+        novaPosicao = novaPosicao + 1; // Ajusta para exibição de 1 a 100
         String casaInfo = "Casa: " + novaPosicao;
 
         System.out.println("+-----" + "-".repeat(mensagem.length()) + "-----+");
@@ -385,7 +389,7 @@ public class Tela {
 
     public void casaInvalidaDebug(Tabuleiro tabuleiro){
         limparTela();
-        System.out.println("Casa inválida! Digite um valor entre 0 e " + (tabuleiro.getCasas().size() - 1));
+        System.out.println("Casa inválida! Digite um valor entre 0 e " + (tabuleiro.getCasas().size()));
     }
 
     public void mensagemDebug(String mensagem){

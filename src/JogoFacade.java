@@ -1,9 +1,9 @@
 package src;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
-import java.util.ArrayList;
 
 public class JogoFacade {
     private static final Scanner Teclado = Entrada.getScanner();
@@ -102,8 +102,8 @@ public class JogoFacade {
         }
     }
 
-    private static int escolherTipoJogadorPorCor(int cor) {
-        String corNome = corParaNome(cor);
+    private static int escolherTipoJogadorPorCor(int numCor) {
+        Cor cor = FactoryCor.instanciarCor(numCor);
         return escolherTipoJogador(corNome);
     }
 
@@ -136,7 +136,6 @@ public class JogoFacade {
 
     public void configTabuleiro(int numCasas) {
         Tabuleiro tabuleiro = Tabuleiro.getInstancia();
-        FactoryCasa factoryCasa = new FactoryCasa();
         
         tela.pedirNumCasasEspeciais();
         int numCasasEspeciais = Teclado.nextInt();
@@ -144,14 +143,14 @@ public class JogoFacade {
         for(int i = 0; i < numCasasEspeciais; i++){
             tela.pedirCasaEspecial(i + 1);
             int casa = Teclado.nextInt();
-            casasEspeciais.add(casa);
+            casasEspeciais.add(casa-1);
         }
         
-        tabuleiro.adicionarCasa(factoryCasa.fazerCasa(0)); //casas 0 criada
         tabuleiro.getCasas().clear();
+        //tabuleiro.adicionarCasa(FactoryCasa.fazerCasa(0)); //casas 0 criada
         for (int i = 0; i < numCasas; i++) {
             if (casasEspeciais.contains(i)) {
-                tela.pedirTipoCasa(i);
+                tela.pedirTipoCasa(i+1);
                 int escolha = Teclado.nextInt();
 
                 if (escolha < 1 || escolha > 7) {
@@ -160,9 +159,9 @@ public class JogoFacade {
                     continue;
                 }
 
-                tabuleiro.adicionarCasa(factoryCasa.fazerCasa(escolha));
+                tabuleiro.adicionarCasa(FactoryCasa.fazerCasa(escolha));
             } else {
-                tabuleiro.adicionarCasa(factoryCasa.fazerCasa(0));
+                tabuleiro.adicionarCasa(FactoryCasa.fazerCasa(0));
             }
         }
     }
