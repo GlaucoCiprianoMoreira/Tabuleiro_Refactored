@@ -104,22 +104,10 @@ public class JogoFacade {
 
     private static int escolherTipoJogadorPorCor(int numCor) {
         Cor cor = FactoryCor.instanciarCor(numCor);
-        return escolherTipoJogador(corNome);
+        return escolherTipoJogador(cor);
     }
 
-    private static String corParaNome(int cor) {
-        switch (cor) {
-            case 1: return "Azul";
-            case 2: return "Verde";
-            case 3: return "Amarelo";
-            case 4: return "Laranja";
-            case 5: return "Vermelho";
-            case 6: return "Rosa";
-            default: return "Desconhecida";
-        }
-    }
-
-    private static int escolherTipoJogador(String cor) {
+    private static int escolherTipoJogador(Cor cor) {
         Tabuleiro tabuleiro = Tabuleiro.getInstancia();
         int tipo;
         while (true) {

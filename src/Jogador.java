@@ -2,13 +2,13 @@ package src;
 
 public abstract class Jogador{
     protected int indice;
-    protected String cor;
+    protected Cor cor;
     protected Dado dado1;
     protected Dado dado2;
     protected boolean podeJogar;
     protected int numJogadas;
     
-    protected Jogador(String cor, int indice){
+    protected Jogador(Cor cor, int indice){
         this.cor = cor;
         this.indice = indice;
         this.podeJogar = true;
@@ -17,8 +17,11 @@ public abstract class Jogador{
     }
     public abstract int rolarDados();
 
-    public String getCor(){
+    public Cor getCor(){
         return cor;
+    }
+    public String getCodigoCor(){
+        return cor.toString();
     }
     public int getIndice(){
         return indice;

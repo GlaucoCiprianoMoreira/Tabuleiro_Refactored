@@ -5,7 +5,7 @@ public class JogadorFactory {
         // Construtor privado para evitar instância
     }
     
-    public static Jogador criarJogador(String cor, int indice, int escolha) {
+    public static Jogador criarJogador(Cor cor, int indice, int escolha) {
         switch (escolha) {
             case 1:
                 return new Sortudo(cor, indice);

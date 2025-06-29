@@ -2,7 +2,7 @@ package src;
 
 public class Azarado extends Jogador {
 
-    public Azarado(String cor, int indice){
+    public Azarado(Cor cor, int indice){
         super(cor, indice);
     }
     @Override

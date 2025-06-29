@@ -104,11 +104,11 @@ public class Tela {
         System.out.print("-> ");
     }
 
-    public void pedirTipoJogador(String cor){
+    public void pedirTipoJogador(Cor cor){
         limparTela();
-        titulo("configurando jogador " + cor);
+        titulo("configurando jogador " + cor.getNome());
         System.out.println("\n=================================================\n");
-        System.out.println("ESCOLHA O TIPO DE JOGADOR DO " + cor.toUpperCase() + ":");
+        System.out.println("ESCOLHA O TIPO DE JOGADOR DO " + cor.codigoCor() + cor.getNome().toUpperCase() + Cor.resetCor() + ":");
         System.out.println("1 - Sortudo:");
         System.out.println("2 - Normal:");
         System.out.println("3 - Azarado:");
@@ -198,7 +198,7 @@ public class Tela {
                     System.out.print(" ");
                     continue;
                 }
-                if(tabuleiro.getCasaJogador(j) == i) System.out.print("P");
+                if(tabuleiro.getCasaJogador(j) == i) System.out.print(tabuleiro.getJogadores().get(j).getCor().codigoCor() + "P" + Cor.resetCor());
                 else System.out.print(" ");
             }
         }
@@ -222,7 +222,7 @@ public class Tela {
                     System.out.print(" ");
                     continue;
                 }
-                if(tabuleiro.getCasaJogador(j) == ((casaInicial - 1) + i)) System.out.print("P");
+                if(tabuleiro.getCasaJogador(j) == ((casaInicial - 1) + i)) System.out.print(tabuleiro.getJogadores().get(j).getCor().codigoCor() + "P" + Cor.resetCor());
                 else System.out.print(" ");
             }
         }
@@ -301,11 +301,7 @@ public class Tela {
     }
 
     private void mostrarCasa(Tabuleiro tabuleiro, int novaPosicao, Jogador jogador){
-        if(novaPosicao>0){
-            novaPosicao = novaPosicao - 1; // Ajusta para índice de 0
-        }
         String mensagem = tabuleiro.getCasas().get(novaPosicao).aplicarEfeito(jogador);
-        novaPosicao = novaPosicao + 1; // Ajusta para exibição de 1 a 100
         String casaInfo = "Casa: " + novaPosicao;
 
         System.out.println("+-----" + "-".repeat(mensagem.length()) + "-----+");
@@ -334,7 +330,7 @@ public class Tela {
     }
 
     public void rodadaJogadorDebug(int rodada, Jogador jogador){
-        titulo("vez do jogador " + jogador.getCor());
+        titulo("vez do jogador " + jogador.getCor().getNome());
 
         System.out.println("R O D A D A   " + rodada + "\n");
     }
@@ -344,7 +340,7 @@ public class Tela {
     }
 
     public void rodadaJogadorNormal(int rodada, Jogador jogador){
-        titulo("vez do jogador " + jogador.getCor());
+        titulo("vez do jogador " + jogador.getCor().getNome());
 
         System.out.println("R O D A D A   " + rodada + "\n");
         System.out.println("PRESSIONE");
@@ -354,7 +350,7 @@ public class Tela {
     }
 
     public void jogadorNaoPodeJogar(int rodada, Jogador jogador){
-        titulo("vez do jogador " + jogador.getCor());
+        titulo("vez do jogador " + jogador.getCor().getNome());
 
         System.out.println("R O D A D A   " + rodada + "\n");
         System.out.println("Jogador " + jogador.getCor() + " não pode jogar nessa rodada.");
@@ -363,7 +359,7 @@ public class Tela {
     }
 
     public void mostrarTabuleiroAposRodada(Tabuleiro tabuleiro, int novaPosicao, int rodada, Jogador jogador){
-        titulo("vez do jogador " + jogador.getCor());
+        titulo("vez do jogador " + jogador.getCor().getNome());
 
         mostrarCasa(tabuleiro, novaPosicao, jogador);
         mostrarTabuleiro();
@@ -389,7 +385,7 @@ public class Tela {
 
     public void casaInvalidaDebug(Tabuleiro tabuleiro){
         limparTela();
-        System.out.println("Casa inválida! Digite um valor entre 0 e " + (tabuleiro.getCasas().size()));
+        System.out.println("Casa inválida! Digite um valor entre 0 e " + (tabuleiro.getCasas().size() - 1));
     }
 
     public void mensagemDebug(String mensagem){

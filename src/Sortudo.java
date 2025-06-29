@@ -2,7 +2,7 @@ package src;
 
 public class Sortudo extends Jogador {
 
-    public Sortudo(String cor, int indice){
+    public Sortudo(Cor cor, int indice){
         super(cor, indice);
     }
     @Override

@@ -2,7 +2,7 @@ package src;
 
 public class Normal extends Jogador {
 
-    public Normal(String cor, int indice){
+    public Normal(Cor cor, int indice){
         super(cor, indice);
     }
 
