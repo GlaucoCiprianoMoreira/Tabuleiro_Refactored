@@ -11,7 +11,7 @@ public class FactoryCor {
 		  case 1:
               return new Cor("verde");
           case 2:
-              return new Cor("azul");
+              return new Cor("ciano");
           case 3:
               return new Cor("roxo");
           case 4:

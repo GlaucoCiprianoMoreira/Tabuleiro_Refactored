@@ -16,7 +16,7 @@ public class Cor {
 		switch(nome) {
             case "verde":
                 return "\u001B[92m";
-            case "azul": 
+            case "ciano": 
                 return "\u001B[38;5;51m";
             case "roxo":
                 return "\u001B[95m";
