@@ -96,7 +96,7 @@ public class Tela {
 
         System.out.println("ESCOLHA COR DO JOGADOR " + jogador + ":");
         System.out.println("1 - Verde");
-        System.out.println("2 - Azul");    
+        System.out.println("2 - Ciano");    
         System.out.println("3 - Roxo");
         System.out.println("4 - Vermelho");
         System.out.println("5 - Rosa");

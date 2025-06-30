@@ -76,7 +76,7 @@ public class Modo {
                         zeroParaContinuar = Teclado.nextInt();
                     }
 
-                    if (novaPosicao == tabuleiro.getCasas().size() - 1) {
+                    if (novaPosicao == tabuleiro.getCasas().size()) {
                         tela.jogadorVenceu(jogador);
                         return i;
                     }
@@ -117,7 +117,7 @@ public class Modo {
         tela.resultadoDados(resultado);
 
         int novaPosicao = tabuleiro.getCasaJogador(i) + resultado;
-        int ultimaCasa = tabuleiro.getCasas().size() - 1;
+        int ultimaCasa = tabuleiro.getCasas().size();
         if (novaPosicao > ultimaCasa) {
             novaPosicao = ultimaCasa;
         }
