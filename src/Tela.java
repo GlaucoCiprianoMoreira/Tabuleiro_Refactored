@@ -95,12 +95,12 @@ public class Tela {
         titulo("cofigurando jogador " + jogador);
 
         System.out.println("ESCOLHA COR DO JOGADOR " + jogador + ":");
-        System.out.println("1 - Azul");
-        System.out.println("2 - Verde");    
-        System.out.println("3 - Amarelo");
-        System.out.println("4 - Laranja");
-        System.out.println("5 - Vermelho");
-        System.out.println("6 - Rosa");
+        System.out.println("1 - Verde");
+        System.out.println("2 - Azul");    
+        System.out.println("3 - Roxo");
+        System.out.println("4 - Vermelho");
+        System.out.println("5 - Rosa");
+        System.out.println("6 - Amarelo");
         System.out.print("-> ");
     }
 
@@ -406,12 +406,13 @@ public class Tela {
 
     public void finalJogo(int  jogadorVitorioso, int rodada, Tabuleiro tabuleiro){
         titulo("fim de jogo");
-
-        System.out.println("PARABÉNS, JOGADOR " + tabuleiro.getJogadores().get(jogadorVitorioso).getCor() + "!! VOCÊ VENCEU!!!");
+        Cor corVitoriosa = tabuleiro.getJogadores().get(jogadorVitorioso).getCor();
+        System.out.println("PARABÉNS, JOGADOR " + corVitoriosa.codigoCor() + corVitoriosa.getNome().toUpperCase() + Cor.resetCor() + "!! VOCÊ VENCEU!!!");
 
         System.out.println("\nNúmero de jogadas de cada jogador:");
         for(int i = 0; i < tabuleiro.getJogadores().size(); i++){
-            System.out.println(tabuleiro.getJogadores().get(i).getCor() + ": " + tabuleiro.getJogadores().get(i).getNumJogadas() + " jogadas");
+            Cor cor = tabuleiro.getJogadores().get(i).getCor();
+            System.out.println(cor.codigoCor() + cor.getNome() + Cor.resetCor() + ": " + tabuleiro.getJogadores().get(i).getNumJogadas() + " jogadas");
         }
     }
 }
